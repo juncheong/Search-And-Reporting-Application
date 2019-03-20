@@ -1,0 +1,27 @@
+{
+  "name": "search-and-reporting-application",
+  "version": "1.0.0",
+  "description": "Web app for CS355 that searches for keywords",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juncheong/Search-And-Reporting-Application.git"
+  },
+  "author": [
+    "Jun Cheong",
+    "Rachel Hirmes",
+    "Daniel Rand"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juncheong/Search-And-Reporting-Application/issues"
+  },
+  "homepage": "https://github.com/juncheong/Search-And-Reporting-Application#readme"
+}
