@@ -19,9 +19,9 @@ document.write(`<head>
         <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Search</a>
         <div class="dropdown-menu">
           <a class="dropdown-item" href="fixedList.html">Phase 2: Fixed List</a>
-          <a class="dropdown-item" href="#">Phase 3: From File</a>
-          <a class="dropdown-item" href="#">Phase 4: Google API</a>
-          <a class="dropdown-item" href="#">Phase 5: Our Search Engine</a>
+          <a class="dropdown-item" href="fromFile.html">Phase 3: From File</a>
+          <a class="dropdown-item" href="googleAPI.html">Phase 4: Google API</a>
+          <a class="dropdown-item" href="ourSearchEngine.html">Phase 5: Our Search Engine</a>
         </div>
       </li>
       <li class="nav-item dropdown">
