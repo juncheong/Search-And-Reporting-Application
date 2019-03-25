@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Web app for CS355 that searches for keywords",
   "main": "app.js",
+  "engines":{
+    "node":"11.12.0"
+  },
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4"
