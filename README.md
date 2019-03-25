@@ -26,7 +26,7 @@ Make sure you create an account on Heroku and let Jun know so you can be added a
 The app can be opened via the URL or also by typing this into the CLI:
 ```heroku open```
 
-
+#### Misc
 scripts and stylesheets are in '/public/' but the link to them in the html files can simply be 
 ```href="/css/example.css"```
 ```src="/javascripts/example.js"```
