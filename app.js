@@ -25,4 +25,4 @@ app.use((req, res, next) => {
 
 //app.listen() automatically creates a server and sets it up to listen
 //pass port 3000 for dev purposes but for deployment, would want to leave blank for default port 80
-app.listen(3000);
+app.listen(process.env.PORT || 3000);
