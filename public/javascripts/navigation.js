@@ -37,7 +37,7 @@ document.write(`<head>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">About</a>
         <div class="dropdown-menu">
-          <a class="dropdown-item" href="Dev_Descriptions.html">Developer Descriptions</a>
+          <a class="dropdown-item" href="dev_descriptions.html">Developer Descriptions</a>
           <a class="dropdown-item" href="contactUs.html">Contact Us</a>
         </div>
       </li>
