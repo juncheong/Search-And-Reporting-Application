@@ -27,7 +27,7 @@ then you can create a commit and deploy to heroku using this command:
 
 Make sure you create an account on Heroku and let Jun know so you can be added as a collaborator!
 
-The app can be opened via the URL or also by typing this into the CLI:
+The app can be opened via the URL or by typing this into the CLI:
 
 ```heroku open```
 
