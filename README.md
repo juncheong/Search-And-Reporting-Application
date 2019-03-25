@@ -9,6 +9,7 @@ https://cs355sara.herokuapp.com/
 
 ### Development guide
 The app can be started locally with nodemon (to immediately view changes) by going to the app directory and typing into a CLI
+
 ```nodemon app.js```
 
 This will make the app live at localhost:3000 and nodemon will immediately make **most** edits available with a refresh
@@ -16,14 +17,18 @@ Somethings might require you to restart the server
 
 #### Deploying to Heroku
 After you've made changes, it'll be a good idea to deploy it to heroku.
-To do that,:
+To do that, make sure the heroku repo is linked locally:
+
 ```heroku git:remote -a cs355sara```
-then add and create a commit then do:
+
+then you can create a commit and deploy to heroku using this command:
+
 ```git push heroku yourbranchnamehere:master```
 
 Make sure you create an account on Heroku and let Jun know so you can be added as a collaborator!
 
 The app can be opened via the URL or also by typing this into the CLI:
+
 ```heroku open```
 
 #### Misc
