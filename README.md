@@ -1,5 +1,5 @@
 # The web app is deployed at:
-# https://cs355sara.herokuapp.com/
+https://cs355sara.herokuapp.com/
 
 ## Heroku CLI Installation:
 ```https://devcenter.heroku.com/articles/heroku-cli```
@@ -22,6 +22,9 @@ then add and create a commit then do:
 ```git push heroku yourbranchnamehere:master```
 
 Make sure you create an account on Heroku and let Jun know so you can be added as a collaborator!
+
+The app can be opened via the URL or also by typing this into the CLI:
+```heroku open```
 
 
 scripts and stylesheets are in '/public/' but the link to them in the html files can simply be 
