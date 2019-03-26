@@ -11,6 +11,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 const mainRoutes = require('./routes/main')
+const errorController = require('./controllers/error')
 
 //note: middleware orders do matter!
 //another middleware by bodyParser. It calls next() once done
@@ -19,9 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(mainRoutes);
 
-app.use((req, res, next) => {
-    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
-});
+app.use(errorController.get404);
 
 //app.listen() automatically creates a server and sets it up to listen
 //pass port 3000 for dev purposes but for deployment, would want to leave blank for default port 80
