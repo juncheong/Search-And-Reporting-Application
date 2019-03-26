@@ -39,8 +39,10 @@ scripts and stylesheets are in '/public/' but the link to them in the html files
 ## Using Docker
 
 ### Installation / Set Up
-```https://hub.docker.com/editions/community/docker-ce-desktop-windows
-https://hub.docker.com/editions/community/docker-ce-desktop-mac```
+```
+https://hub.docker.com/editions/community/docker-ce-desktop-windows
+https://hub.docker.com/editions/community/docker-ce-desktop-mac
+```
 
 Once installed, go into the directory of the app using a CLI and build the Docker image (make sure to include the '.' at the end)
 ```docker build -t sara .```
@@ -54,8 +56,10 @@ To verify, run
 
 ### Stopping the running container
 
-```docker ps
-docker stop <CONTAINER ID or NAME of the container here>```
+```
+docker ps
+docker stop <CONTAINER ID or NAME of the container here>
+```
 
 Alternatively, one can stop all running containers with this command
 ```docker stop $(docker ps -a -q)```
