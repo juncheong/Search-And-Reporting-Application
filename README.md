@@ -6,9 +6,6 @@ https://cs355sara.herokuapp.com/
 ## Heroku CLI Installation:
 ```https://devcenter.heroku.com/articles/heroku-cli```
 
-## Node Installation:
-```https://nodejs.org/en/download/```
-
 ## Using Docker
 ## Installation / Set Up
 https://hub.docker.com/editions/community/docker-ce-desktop-windows
@@ -73,6 +70,9 @@ password: password
 
 
 # Deprecated
+## Node Installation:
+```https://nodejs.org/en/download/```
+
 ## Starting app with nodemon
 * The app can be started locally with nodemon (to immediately view changes) by going to the app directory and typing into a CLI
 
