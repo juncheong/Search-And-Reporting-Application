@@ -8,16 +8,16 @@ https://hub.docker.com/editions/community/docker-ce-desktop-windows
 https://hub.docker.com/editions/community/docker-ce-desktop-mac
 
 ## Running the app
-* Now, the app and everything else you might need for development can be started with one simple code in the project directory!
+* Now, the app and everything else you might need for development can be started with one simple command line code in the project directory!
 
 ```docker-compose up```
 
 ## Closing the app 
-* The app can be stopped with CTRL + C (Or whatever appropriate command on your OS) then just run the code below to stop the containers
+* The app can be stopped with CTRL + C (Or whatever appropriate command on your OS) then just run the code below to stop and remove the other containers
 
 ```docker-compose down```
 
-## Jenkins configuration
+## Jenkins configuration (Not in use yet. Refer to Heroku instructions below)
 * Once docker-compose up has finished and Jenkins is up and running, go to `localhost:8080` and you'll be asked for a password
 * The password was output into the terminal where you ran `docker-compose up`
 * When you're in `install suggested plugins` and when it's finished, create a login and you're done!
