@@ -2,10 +2,6 @@
 https://cs355sara.herokuapp.com/
 
 # Development guide
-
-## Heroku CLI Installation:
-```https://devcenter.heroku.com/articles/heroku-cli```
-
 ## Using Docker
 ## Installation / Set Up
 https://hub.docker.com/editions/community/docker-ce-desktop-windows
@@ -36,6 +32,8 @@ https://hub.docker.com/editions/community/docker-ce-desktop-mac
 
 * **At the moment, these steps will have to be repeated whenever the containers are removed. Normal docker-compose down will not affect this**
 
+## Heroku CLI Installation:
+```https://devcenter.heroku.com/articles/heroku-cli```
 ## Deploying to Heroku
 * After you've made changes, it'll be a good idea to deploy it to heroku.
 * To do that, make sure the heroku repo is linked locally:
