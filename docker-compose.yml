@@ -21,6 +21,14 @@ services:
       - .:/usr/src/app
     ports:
       - "3000:3000"
+    environment:
+      DB_NAME: sara
+      DB_HOST: db
+      DB_USER: root
+      DB_PASS: password
+      DB_PORT: 3306     # might need to change this to 3308?
+
+      NODE_ENV: development
     depends_on:
       - db
 

@@ -1,44 +1,45 @@
-# The web app is deployed at:
+# The web app is deployed at
 https://cs355sara.herokuapp.com/
 
 # Development guide
-
-## Heroku CLI Installation:
-```https://devcenter.heroku.com/articles/heroku-cli```
-
-## Node Installation:
+## Node Installation (Only necessary for migrating and seeding db)
 ```https://nodejs.org/en/download/```
-
 ## Using Docker
-## Installation / Set Up
+## Installation
 https://hub.docker.com/editions/community/docker-ce-desktop-windows
 https://hub.docker.com/editions/community/docker-ce-desktop-mac
 
-* Once installed, go into the directory of the app using a CLI and build the Docker image (make sure to include the '.' at the end)
-
-```docker build -t sara .```
-
-* To verify, run
-
-```docker images```
-
 ## Running the app
-* Now, the app and everything else you might need for development can be started with one simple code in the project directory!
+* Now, the app and everything else you might need for development can be started with one simple command line code in the project directory!
 
 ```docker-compose up```
 
 ## Closing the app 
-* The app can be stopped with CTRL + C (Or whatever appropriate command on your OS) then just run the code below to stop the containers
+* The app can be stopped with CTRL + C (Or whatever appropriate command on your OS) then just run the code below to stop and remove the other containers
 
 ```docker-compose down```
 
-## Jenkins configuration
+## Migrating and seeding the database
+
+* Make sure knex is installed globally with
+```npm install knex --global```
+
+* Then in the directory of the app, type the following into a CLI 
+```knex migrate:latest```
+```knex seed:run```
+
+* Migrations can be undone with
+```knex migrate:rollback```
+
+## Jenkins configuration (Not in use yet. Refer to Heroku instructions below)
 * Once docker-compose up has finished and Jenkins is up and running, go to `localhost:8080` and you'll be asked for a password
 * The password was output into the terminal where you ran `docker-compose up`
 * When you're in `install suggested plugins` and when it's finished, create a login and you're done!
 
-* **At the moment, these steps will have to be repeated whenever the containers are removed. Normal docker-compose down will not affect this**
+* **At the moment, these steps will have to be repeated whenever the images are rebuilt. Normal docker-compose down will not affect this**
 
+## Heroku CLI Installation:
+```https://devcenter.heroku.com/articles/heroku-cli```
 ## Deploying to Heroku
 * After you've made changes, it'll be a good idea to deploy it to heroku.
 * To do that, make sure the heroku repo is linked locally:
@@ -73,6 +74,7 @@ password: password
 
 
 # Deprecated
+
 ## Starting app with nodemon
 * The app can be started locally with nodemon (to immediately view changes) by going to the app directory and typing into a CLI
 
