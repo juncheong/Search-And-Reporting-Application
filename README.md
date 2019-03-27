@@ -3,17 +3,9 @@ https://cs355sara.herokuapp.com/
 
 # Development guide
 ## Using Docker
-## Installation / Set Up
+## Installation
 https://hub.docker.com/editions/community/docker-ce-desktop-windows
 https://hub.docker.com/editions/community/docker-ce-desktop-mac
-
-* Once installed, go into the directory of the app using a CLI and build the Docker image (make sure to include the '.' at the end)
-
-```docker build -t sara .```
-
-* To verify, run
-
-```docker images```
 
 ## Running the app
 * Now, the app and everything else you might need for development can be started with one simple code in the project directory!
