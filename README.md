@@ -22,7 +22,7 @@ https://hub.docker.com/editions/community/docker-ce-desktop-mac
 * The password was output into the terminal where you ran `docker-compose up`
 * When you're in `install suggested plugins` and when it's finished, create a login and you're done!
 
-* **At the moment, these steps will have to be repeated whenever the containers are removed. Normal docker-compose down will not affect this**
+* **At the moment, these steps will have to be repeated whenever the images are rebuilt. Normal docker-compose down will not affect this**
 
 ## Heroku CLI Installation:
 ```https://devcenter.heroku.com/articles/heroku-cli```
