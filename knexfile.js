@@ -1,6 +1,6 @@
 module.exports = {
     development: {
-        client: 'mysql',
+        client: 'mysql2',
         connection: {
             host: '127.0.0.1',
             user: 'root',
@@ -16,7 +16,7 @@ module.exports = {
         }
     },
     production: {
-        client: 'mysql',
+        client: 'mysql2',
         connection: process.env.DATABASE_URL,
         migrations: {
             directory: __dirname + '/db/migrations'

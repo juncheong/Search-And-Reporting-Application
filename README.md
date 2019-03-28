@@ -24,7 +24,7 @@ https://hub.docker.com/editions/community/docker-ce-desktop-mac
 * Make sure knex is installed globally with
 ```npm install knex --global```
 
-* Then in the directory of the app, type the following into a CLI 
+* Then in the directory of the app, type the following into a CLI while the MySQL container is running
 ```knex migrate:latest```
 ```knex seed:run```
 
