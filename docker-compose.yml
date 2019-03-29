@@ -2,9 +2,11 @@ version: '3.3'
 
 services:
   db:
-    image: mysql:8
-    volumes:
-       - db_data:/var/lib/mysql
+    build:
+      context: ./db
+      dockerfile: Dockerfile
+    #volumes:
+       #- db_data:/var/lib/mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
@@ -29,7 +31,6 @@ services:
       DB_PORT: 3306
 
       NODE_ENV: development
-    command: nodemon --watch views -e js,html server.js
     depends_on:
       - db
 
@@ -39,5 +40,5 @@ services:
       - '8080:8080'
       - '50000:50000'
     
-volumes:
-    db_data: {}
+#volumes:
+    #db_data: {}

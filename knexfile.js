@@ -25,4 +25,4 @@ module.exports = {
             directory: __dirname + '/db/seeds'
         }
     }
-  }
+}

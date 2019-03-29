@@ -1,8 +1,9 @@
 echo "running start-dev"
 
-# npm install knex --global
+
 # echo "Running migrations..."
-# knex migrate:latest
+
 # echo "Done running migrations..."
 
-npm start
+# npm start
+nodemon --watch views -e js,html server.js
