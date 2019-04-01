@@ -69,6 +69,10 @@ password: password
 ### Word table columns
 ```word```
 
+## Production environment variables
+* Environment variables used for production should NEVER be committed.
+* Many of these are specified in Heroku under `config vars`
+
 # Deprecated
 
 ## Node Installation
