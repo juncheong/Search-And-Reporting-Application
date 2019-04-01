@@ -19,10 +19,6 @@ exports.getDevDescriptions = (req, res, next) => {
     res.sendFile(path.join(rootDir, 'views', 'dev_descriptions.html'));
 }
 
-exports.getFixedList = (req, res, next) => {
-    res.sendFile(path.join(rootDir, 'views', 'fixedList.html'));
-}
-
 exports.getGeolocation = (req, res, next) => {
     res.sendFile(path.join(rootDir, 'views', 'geolocation.html'));
 }
@@ -37,16 +33,4 @@ exports.getScreen = (req, res, next) => {
 
 exports.getWindow = (req, res, next) => {
     res.sendFile(path.join(rootDir, 'views', 'window.html'));
-}
-
-exports.getFromFile = (req, res, next) => {
-    res.sendFile(path.join(rootDir, 'views', 'fromFile.html'));
-}
-
-exports.getGoogleAPI =  (req, res, next) => {
-    res.sendFile(path.join(rootDir, 'views', 'googleAPI.html'));
-}
-
-exports.getOurSearchEngine = (req, res, next) => {
-    res.sendFile(path.join(rootDir, 'views', 'ourSearchEngine.html'));
 }

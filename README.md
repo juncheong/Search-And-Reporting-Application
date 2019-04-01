@@ -2,8 +2,6 @@
 https://cs355sara.herokuapp.com/
 
 # Development guide
-## Node Installation (Only necessary for migrating and seeding db)
-```https://nodejs.org/en/download/```
 ## Using Docker
 ## Installation
 https://hub.docker.com/editions/community/docker-ce-desktop-windows
@@ -15,28 +13,16 @@ https://hub.docker.com/editions/community/docker-ce-desktop-mac
 ```docker-compose up```
 
 ## Closing the app 
-* The app can be stopped with CTRL + C (Or whatever appropriate command on your OS) then just run the code below to stop and remove the other containers
+* The app can be stopped with CTRL + C (Or whatever appropriate command on your OS) then just run the code below to stop and remove the other containers if desired
 
 ```docker-compose down```
-
-## Migrating and seeding the database
-
-* Make sure knex is installed globally with
-```npm install knex --global```
-
-* Then in the directory of the app, type the following into a CLI while the MySQL container is running
-```knex migrate:latest```
-```knex seed:run```
-
-* Migrations can be undone with
-```knex migrate:rollback```
 
 ## Jenkins configuration (Not in use yet. Refer to Heroku instructions below)
 * Once docker-compose up has finished and Jenkins is up and running, go to `localhost:8080` and you'll be asked for a password
 * The password was output into the terminal where you ran `docker-compose up`
 * When you're in `install suggested plugins` and when it's finished, create a login and you're done!
 
-* **At the moment, these steps will have to be repeated whenever the images are rebuilt. Normal docker-compose down will not affect this**
+* **At the moment, these steps above for Jenkins will have to be repeated whenever the images are rebuilt. Normal docker-compose down will not affect this**
 
 ## Heroku CLI Installation:
 ```https://devcenter.heroku.com/articles/heroku-cli```
@@ -75,6 +61,9 @@ password: password
 
 # Deprecated
 
+## Node Installation
+```https://nodejs.org/en/download/```
+
 ## Starting app with nodemon
 * The app can be started locally with nodemon (to immediately view changes) by going to the app directory and typing into a CLI
 
@@ -95,3 +84,16 @@ docker stop <CONTAINER ID or NAME of the container here>
 Alternatively, one can stop all running containers with this command
 
 ```docker stop $(docker ps -a -q)```
+
+
+## Migrating and seeding the database
+
+* Make sure knex is installed globally with
+```npm install knex --global```
+
+* Then in the directory of the app, type the following into a CLI while the MySQL container is running
+```knex migrate:latest```
+```knex seed:run```
+
+* Migrations can be undone with
+```knex migrate:rollback```
