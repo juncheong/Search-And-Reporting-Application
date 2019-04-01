@@ -1,7 +1,7 @@
 # The web app is deployed at
 https://cs355sara.herokuapp.com/
 
-# Development guide
+# Getting started
 ## Using Docker
 ## Installation
 https://hub.docker.com/editions/community/docker-ce-desktop-windows
@@ -53,11 +53,21 @@ username: root
 password: password
 ```
 
-# Misc
+# Misc development info
+## Accessing scripts and stylesheets
 * scripts and stylesheets are in '/public/' but the link to them in the html files can simply be 
 ```href="/css/example.css"```
 ```src="/javascripts/example.js"```
 
+## HTTP requests
+* Get requests can be made to `/getAllWords` and `/getAllPages`
+* Post requests can be made to `/insertWord` and `/insertPage` by passing all the necessary columns as a json object (ID's are not passed as they are auto-incremented in MySQL)
+
+## Database Schemas
+### Page table columns
+```url, description, title, lastModified, lastIndexed```
+### Word table columns
+```word```
 
 # Deprecated
 
