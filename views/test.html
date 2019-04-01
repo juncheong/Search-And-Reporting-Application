@@ -9,15 +9,16 @@
 <body>
     <h1>TEST</h1>
     <script>
+
         const http = new XMLHttpRequest();
         const url = '/insertPage';
         const time = new Date().toISOString().slice(0, 19).replace('T', ' ');
         //url, description, title, lastModified, lastIndexed
         const params = 
         {
-            "url": "https://www.thrillist.com/eat/new-york/the-best-pizza-in-new-york-city",
-            "description": "For the best of the ever-changing pizza landscape in NYC (plus some old reliables), consult our time-tested, ever-updated pizza bible.",
-            "title": "Best Pizza in NYC: Places With the Best Slices in New York City - Thrillist",
+            "url": "https://www.cnn.com/travel/article/best-pizza-new-york-city/index.html",
+            "description": "New York City&#x27;s pizza scene is stronger than ever. Find out where to go for the best pizza restaurants and what they serve on their pies.",
+            "title": "These are New York City's best pizza restaurants",
             "lastModified": time,
             "lastIndexed": time
         };
