@@ -16,7 +16,7 @@ exports.getContactUs = (req, res, next) => {
 }
 
 exports.getDevDescriptions = (req, res, next) => {
-    res.sendFile(path.join(rootDir, 'views', 'dev_descriptions.html'));
+    res.sendFile(path.join(rootDir, 'views', 'devDescriptions.html'));
 }
 
 exports.getGeolocation = (req, res, next) => {
