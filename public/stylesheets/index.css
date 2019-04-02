@@ -1,0 +1,22 @@
+html *{
+   font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    color: blue;
+  }
+
+h2 {
+    text-align: center;
+    color: blue;
+}
+
+
+ ul li{
+    margin: 3%;
+    font-size: 20px;
+    list-style-type: none;
+    font-family: verdana;
+
+}
