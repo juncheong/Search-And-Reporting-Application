@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<script type="text/javascript" src="/javascripts/navigation.js"></script>
+<script type="text/javascript" src="/javascripts/fileProcessing.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,5 +10,9 @@
 </head>
 <body>
     <h1>From File</h1>
+    <label for = "type">Enter file type, either CSV, JSON, or XML:</label>
+    <input type="text" id="type" />
+    <input type="file" id="up" />
+	<input type="submit" id="btn" onclick = "processFile()" />
 </body>
 </html>
