@@ -12,7 +12,7 @@ document.write(`<head>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Course</a>
           <div class="dropdown-menu">
-            <a class="nav-link" href="https://learn.zybooks.com/zybook/CUNYCSCI355TeitelmanSpring2019">Zybook</a>
+            <a class="nav-link" href="https://learn.zybooks.com/zybook/CUNYCSCI355TeitelmanSpring2019" target="_blank">Zybook</a>
           </div>
       </li>
       <li class="nav-item dropdown">
