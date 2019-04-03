@@ -31,12 +31,11 @@ if(file.files.length)
     obj = jQuery.parseJSON(e.target.result);
   else
     obj = e.target.result;
-  $("#btn").after(`<br><br>
-    <div class="input-group mb-3 col-3">
+  $( "#bar" ).empty();
+  $("#bar").append(`
     <input id = "search_Field" type="text" class="form-control" placeholder="Enter query here" aria-label="searchbar1" aria-describedby="basic-addon2" >
     <div class="input-group-append">
     <button class="btn btn-outline-secondary" type="button" onclick="search()">Search</button>
-    </div>
     </div>
     `);
 };
