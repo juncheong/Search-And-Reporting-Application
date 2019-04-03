@@ -62,6 +62,7 @@ function search () {
 }
 
 function dropdown () {
+  $( "#dropdown" ).empty();
   $( "#dropdown" ).append(`
        <fieldset>
           <legend>Choose format of resulting file:</legend>
