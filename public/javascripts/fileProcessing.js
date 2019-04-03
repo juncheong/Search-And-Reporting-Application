@@ -29,7 +29,7 @@ if(file.files.length)
  {
   if (fileType == ".json")
     obj = jQuery.parseJSON(e.target.result);
-  else if (fileType == ".xml") 
+  else
     obj = e.target.result;
   $("#btn").after(`<br><br>
     <div class="input-group mb-3 col-3">
@@ -49,6 +49,9 @@ function search () {
     jsonSearch();
   else if (fileType == ".xml") {
     xmlSearch ();
+  }
+  else {
+    csvSearch();
   }
 }
 
@@ -145,6 +148,11 @@ function xmlSearch () {
                     </tr>
     `);
   }
+}
+
+function csvSearch () {
+  alert(obj);
+  var array = $.csv.toArrays(obj);
 }
 
         
