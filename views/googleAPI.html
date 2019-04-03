@@ -7,7 +7,18 @@
     <script src="/javascripts/googleAPI.js"></script>
     <script src="/javascripts/navigation.js"></script>
     <link rel="stylesheet" href="/public/stylesheets/index.css">
-
+    <script>
+      function loadXMLDoc() {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            myFunction(this);
+          }
+        };
+        xmlhttp.open("GET", "cse.xml", true);
+        xmlhttp.send();
+      }
+    </script>
     <title>Phase 4: Google API</title>
 </head>
 <body>
@@ -15,6 +26,7 @@
 
             <div  class="input-group mb-3 col-3" style="width:0px;overflow:hidden;height:0px;"> 
                 <gcse:search enableAutoComplete="true"></gcse:search>
+                
             </div>
             <form id="searchbox_XXXXXXXXXX:YYYYYYYYY" action="" >
                 <input value="XXXXXXXXXX:YYYYYYYYY" name="cx" type="hidden" />
@@ -24,16 +36,19 @@
             </form>
         <div>
         <div class="gcse-results-wrapper">
+            <!-- <table class="table col-9"> 
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">Title</th>
+              <th scope="col">Website URL</th>
+              <th scope="col">Description</th>
+            </tr>
+          </thead>
+
+        <tbody>
+          </table> -->
                 <gcse:searchresults-only>
-                <table class="table col-9">
-                        <thead class="thead-light">
-                          <tr>
-                            <th scope="col">Title</th>
-                            <th scope="col">Website URL</th>
-                            <th scope="col">Description</th>
-                          </tr>
-                        </thead>
-       </gcse:searchresults-only>
+                </gcse:searchresults-only>
         </div>
 </body>
 </html>
