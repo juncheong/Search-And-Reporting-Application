@@ -1,29 +1,58 @@
 var obj;
+var fileType;
 function processFile() {
-	//var type = document.getElementById("type").value;
-	//if (type == "CSV" || type == "JSON" || type == "XML") {
-		var file = document.getElementById("up");
-    	if(file.files.length)
-    	{
-    	    var reader = new FileReader();
-   	     	reader.onload = function(e)
-        	{
-              obj = jQuery.parseJSON(e.target.result);
-              $("#btn").after(`<br><br>
-                <div class="input-group mb-3 col-3">
-                  <input id = "search_Field" type="text" class="form-control" placeholder="Enter query here" aria-label="searchbar1" aria-describedby="basic-addon2" >
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" onclick="search()">Search</button>
-                  </div>
-                </div>
-                `);
-        	};
-        	reader.readAsBinaryString(file.files[0]);
-    	}
-	//}
+ var _validFileExtensions = [".json", ".xml", ".csv"];    
+ var file = document.getElementById("up");
+ var fileName = file.value;
+ if (fileName.length > 0) {
+  var blnValid = false;
+  for (var j = 0; j < _validFileExtensions.length; j++) {
+    var sCurExtension = _validFileExtensions[j];
+    var extension = fileName.substr(fileName.length - sCurExtension.length, sCurExtension.length).toLowerCase();
+    if (extension == sCurExtension.toLowerCase()) {
+      blnValid = true;
+      console.log(extension);
+      fileType = extension;
+      break;
+    }
+  }
+
+  if (!blnValid) {
+    alert("Sorry, " + fileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
+    return false;
+  }
 }
-              //console.log(obj.Result[0].title);
+if(file.files.length)
+{
+ var reader = new FileReader();
+ reader.onload = function(e)
+ {
+  if (fileType == ".json")
+    obj = jQuery.parseJSON(e.target.result);
+  else if (fileType == ".xml") 
+    obj = e.target.result;
+  $("#btn").after(`<br><br>
+    <div class="input-group mb-3 col-3">
+    <input id = "search_Field" type="text" class="form-control" placeholder="Enter query here" aria-label="searchbar1" aria-describedby="basic-addon2" >
+    <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button" onclick="search()">Search</button>
+    </div>
+    </div>
+    `);
+};
+reader.readAsBinaryString(file.files[0]);
+}
+}
+//console.log(obj.Result[0].title);
 function search () {
+  if (fileType == ".json")
+    jsonSearch();
+  else if (fileType == ".xml") {
+    xmlSearch ();
+  }
+}
+
+function jsonSearch () {
   var query = document.getElementById("search_Field").value;
   console.log(query);
   query = query.toUpperCase();
@@ -31,39 +60,75 @@ function search () {
   var numResults = 0;
   $( "table" ).empty();
   $("table").append(`<thead class="thead-light">
-      <tr>
-        <th scope="col">Title</th>
-        <th scope="col">Website URL</th>
-        <th scope="col">Description</th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>`);
-  for (var i=0 ; i < obj.Result.length ; i++)
-  {
+                  <tr>
+                  <th scope="col">Title</th>
+                  <th scope="col">Website URL</th>
+                  <th scope="col">Description</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+  </tbody>`);
+  for (var i=0 ; i < obj.Result.length ; i++) {
     if (obj.Result[i].title.toUpperCase().indexOf(query) !== -1) {
-        numResults++;
-        $("tbody").append(`
-          <tr>
-            <td>`+ obj.Result[i].title + `</td>
-            <td><a href="`+ obj.Result[i].url + `"">` + obj.Result[i].url + `</a></td>
-            <td>` + obj.Result[i].description + `</td>
-          </tr>
-        `);
+      numResults++;
+      $("tbody").append(`
+                      <tr>
+                      <td>`+ obj.Result[i].title + `</td>
+                      <td><a href="`+ obj.Result[i].url + `"">` + obj.Result[i].url + `</a></td>
+                      <td>` + obj.Result[i].description + `</td>
+                      </tr>
+      `);
     }
   }
   if (numResults == 0) {
     $("tbody").append(`
-          <tr>
-            <td>No Results found for query: ` + query.toLowerCase() + `</td>
-          </tr>
-        `);
+                    <tr>
+                    <td>No Results found for query: ` + query.toLowerCase() + `</td>
+                    </tr>
+    `);
   }
   else {
     $("tbody").append(`
-          <tr>
-            <td>` + numResults + ` matches for "` + query.toLowerCase() + `"</td>
-          </tr>
-        `);
+                    <tr>
+                    <td>` + numResults + ` matches for "` + query.toLowerCase() + `"</td>
+                    </tr>
+    `);
   }
 }
+
+function xmlSearch () {
+  alert(obj);
+  var text, parser, xmlDoc;
+  text = obj;
+  parser = new DOMParser();
+  xmlDoc = parser.parseFromString(text,"text/xml");
+  var title = xmlDoc.getElementsByTagName("title")[0].childNodes[0].nodeValue.toString();
+  console.log(title);
+  /*
+  xmlDoc = $.parseXML(xml),
+  $xml = $( xmlDoc ),
+  $title = $xml.find( "title");
+  */
+  var query = document.getElementById("search_Field").value;
+  console.log(query);
+  query = query.toUpperCase();
+  var searchResults = "";
+  var numResults = 0;
+  $( "table" ).empty();
+  $("table").append(`<thead class="thead-light">
+                  <tr>
+                  <th scope="col">Title</th>
+                  <th scope="col">Website URL</th>
+                  <th scope="col">Description</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+  </tbody>`);
+  $("tbody").append(`
+                      <tr>
+                      <td>`+ title + `</td>
+                      </tr>
+      `);
+}
+
+        
