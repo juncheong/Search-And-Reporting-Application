@@ -151,8 +151,49 @@ function xmlSearch () {
 }
 
 function csvSearch () {
-  alert(obj);
-  var array = $.csv.toArrays(obj);
+  $( "table" ).empty();
+  $("table").append(`<thead class="thead-light">
+                  <tr>
+                  <th scope="col">Title</th>
+                  <th scope="col">Website URL</th>
+                  <th scope="col">Description</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+  </tbody>`);
+  var query = document.getElementById("search_Field").value;
+  console.log(query);
+  query = query.toUpperCase();
+  var numResults = 0;
+  var arrays = $.csv.toArrays(obj);
+  for(var i = 0; i < arrays.length; i++) {
+    var array = arrays[i];
+    var title = array[0];
+    if (title.toUpperCase().indexOf(query) !== -1) {
+      numResults++;
+      $("tbody").append(`
+                      <tr>
+                      <td>`+ title + `</td>
+                      <td><a href="`+ array[1] + `"">` + array[1] + `</a></td>
+                      <td>` + array[2] + `</td>
+                      </tr>
+      `);
+    }
+  }
+  if (numResults == 0) {
+    $("tbody").append(`
+                    <tr>
+                    <td>No Results found for query: ` + query.toLowerCase() + `</td>
+                    </tr>
+    `);
+  }
+  else {
+    $("tbody").append(`
+                    <tr>
+                    <td>` + numResults + ` matches for "` + query.toLowerCase() + `"</td>
+                    </tr>
+    `);
+  }
 }
 
         
