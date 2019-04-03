@@ -1,5 +1,5 @@
 # The web app is deployed at
-https://cs355sara.herokuapp.com/
+https://maccabeam.herokuapp.com/
 
 # Getting started
 ## Using Docker
@@ -30,7 +30,7 @@ https://hub.docker.com/editions/community/docker-ce-desktop-mac
 * After you've made changes, it'll be a good idea to deploy it to heroku.
 * To do that, make sure the heroku repo is linked locally:
 
-```heroku git:remote -a cs355sara```
+```heroku git:remote -a maccabeam```
 
 * then you can create a commit and deploy to heroku using this command:
 
