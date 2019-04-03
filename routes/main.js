@@ -12,7 +12,7 @@ router.get('/browser.html', mainController.getBrowser);
 
 router.get('/contactUs.html', mainController.getContactUs);
 
-router.get('/dev_descriptions.html', mainController.getDevDescriptions);
+router.get('/devDescriptions.html', mainController.getDevDescriptions);
 
 router.get('/geolocation.html', mainController.getGeolocation);
 
