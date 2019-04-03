@@ -2,19 +2,15 @@ html *{
    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-h1 {
+h1, h2 {
     text-align: center;
     color: blue;
   }
 
-h2 {
-    text-align: center;
-    color: blue;
-}
 
 
- ul li{
-    margin: 3%;
+  li{
+    margin: 5%;
     font-size: 20px;
     list-style-type: none;
     font-family: verdana;
