@@ -52,8 +52,34 @@ function search () {
   else {
     csvSearch();
   }
+  $( "#save" ).remove();
+  $( "#saveSubmit" ).remove();
+
+  $( "#dropdown" ).empty();
+  $( "table" ).after(`
+    <input type="button" id = "save" value="Save Results" onclick="dropdown()">
+    `);
 }
 
+function dropdown () {
+  $( "#dropdown" ).append(`
+       <fieldset>
+          <legend>Choose format of resulting file:</legend>
+          <p>
+             <label>Select list</label>
+             <select id = "myList">
+               <option value = "json">.json</option>
+               <option value = "csv">.csv</option>
+               <option value = "xml">.xml</option>
+             </select>
+          </p>
+       </fieldset>
+       <input type="button" value = "Download" id="saveSubmit" onclick = "saveResults()" />
+  `);
+}
+function saveResults() {
+  alert("downloading");
+}
 function jsonSearch () {
   var query = document.getElementById("search_Field").value;
   console.log(query);
