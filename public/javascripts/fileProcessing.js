@@ -97,23 +97,6 @@ function jsonSearch () {
 }
 
 function xmlSearch () {
-  alert(obj);
-  var text, parser, xmlDoc;
-  text = obj;
-  parser = new DOMParser();
-  xmlDoc = parser.parseFromString(text,"text/xml");
-  var title = xmlDoc.getElementsByTagName("title")[0].childNodes[0].nodeValue.toString();
-  console.log(title);
-  /*
-  xmlDoc = $.parseXML(xml),
-  $xml = $( xmlDoc ),
-  $title = $xml.find( "title");
-  */
-  var query = document.getElementById("search_Field").value;
-  console.log(query);
-  query = query.toUpperCase();
-  var searchResults = "";
-  var numResults = 0;
   $( "table" ).empty();
   $("table").append(`<thead class="thead-light">
                   <tr>
@@ -124,11 +107,44 @@ function xmlSearch () {
                   </thead>
                   <tbody>
   </tbody>`);
-  $("tbody").append(`
+  var query = document.getElementById("search_Field").value;
+  console.log(query);
+  query = query.toUpperCase();
+  var numResults = 0;
+  var text, parser, xmlDoc;
+  text = obj;
+  xmlDoc = $.parseXML(text),
+  $xml = $( xmlDoc ),
+  $firstCookBook = $xml.find('result').find('title').first().text();
+  //console.log($firstCookBook);
+  $xml.children('results').children('result').each(function(index) {
+    var title = $( this ).find('title').text();
+    if (title.toUpperCase().indexOf(query) !== -1) {
+      console.log(title)
+      numResults++;
+      $("tbody").append(`
                       <tr>
                       <td>`+ title + `</td>
+                      <td><a href="`+ $( this ).find('url').text() + `"">` + $( this ).find('url').text() + `</a></td>
+                      <td>` + $( this ).find('description').text() + `</td>
                       </tr>
       `);
+    }
+  })
+  if (numResults == 0) {
+    $("tbody").append(`
+                    <tr>
+                    <td>No Results found for query: ` + query.toLowerCase() + `</td>
+                    </tr>
+    `);
+  }
+  else {
+    $("tbody").append(`
+                    <tr>
+                    <td>` + numResults + ` matches for "` + query.toLowerCase() + `"</td>
+                    </tr>
+    `);
+  }
 }
 
         
