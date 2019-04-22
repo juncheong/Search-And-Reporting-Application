@@ -19,7 +19,7 @@ services:
   sara:
     build:
       context: .
-      dockerfile: Dockerfile-dev
+      dockerfile: Dockerfile
     volumes:
       - .:/usr/src/app
     ports:
