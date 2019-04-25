@@ -1,12 +1,10 @@
 pipeline {
-    agent any
-    tools {
-        nodejs 'node 11.12'
+    agent {
+        docker {
+            image 'node:11.12'
+            args '-p 3000:3000'
+        }
     }
-    parameters {
-        string(name: 'DOCKER_COMPOSE_FILENAME', defaultValue: 'docker-compose.yml', description: '')
-    }
-
     stages {
         stage('npm install') {
             steps {
