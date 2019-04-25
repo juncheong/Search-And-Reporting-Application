@@ -13,10 +13,10 @@ pipeline {
                 sh "npm install"
             }
         }
-        post {
-            always {
-                sh 'echo "Writing from Jenkinsfile"'
-            }
+    }
+    post {
+        always {
+            sh 'echo "Writing from Jenkinsfile"'
         }
     }
 }
