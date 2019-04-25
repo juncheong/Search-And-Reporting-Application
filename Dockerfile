@@ -1,7 +1,7 @@
 # This can be found on nodejs.org/de/docs/guides/nodejs-docker-webapp/
 
 # Specifies the image. This uses version 11.12 of node found on Docker Hub
-FROM node:11.12
+FROM node:11
 
 # Creates a directory within the container that will have our application code
 WORKDIR /usr/src/app
