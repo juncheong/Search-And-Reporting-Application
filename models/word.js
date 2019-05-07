@@ -19,6 +19,6 @@ module.exports = class word {
       }
     
       static findById(id) {
-        
+        return db.execute('SELECT * FROM `word` WHERE `wordId` = ?', [id])  
       }
 };
