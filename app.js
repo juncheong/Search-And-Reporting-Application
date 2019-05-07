@@ -12,6 +12,7 @@ const app = express();
 
 const mainRoutes = require('./routes/main');
 const searchRoutes = require('./routes/search');
+const apiRoutes = require('./routes/api');
 const errorController = require('./controllers/error');
 
 if (process.env.NODE_ENV !== 'development')
@@ -21,12 +22,23 @@ console.log("NODE_ENV: " + process.env.NODE_ENV);
 
 //note: middleware orders do matter!
 //another middleware by bodyParser. It calls next() once done
-app.use(bodyParser.urlencoded({extended: false}));
+//app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json()); // application/json
+
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//used to resolve CORS errors
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+});
+
 app.use(mainRoutes);
 app.use(searchRoutes);
+app.use('/api', apiRoutes);
 
 app.use(errorController.get404);
 

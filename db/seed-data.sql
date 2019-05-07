@@ -107,7 +107,7 @@ DROP TABLE IF EXISTS `word`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `word` (
   `wordId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `word` varchar(255) NOT NULL,
+  `wordName` varchar(255) NOT NULL,
   PRIMARY KEY (`wordId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
