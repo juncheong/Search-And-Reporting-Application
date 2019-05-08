@@ -5,7 +5,7 @@ const db = require('../util/db_' + process.env.NODE_ENV);
 const Word = require('../models/word');
 const Page = require('../models/page');
 const Search = require('../models/search');
-const pageWord = require('../models/pageWord');
+const PageWord = require('../models/pageWord');
 
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
@@ -88,16 +88,9 @@ exports.postIndexing = (req, res, next) => {
         }
         else {
             const htmlBody = body;
-            //console.log(htmlBody);
-
             const frag = JSDOM.fragment(JSON.stringify(htmlBody));
 
             const endTime = new Date();
-
-            const pageId = Page.findIdByUrl(url);
-            pageId.then(function(result) {
-                console.log(result[0]);
-            })
 
             let title = null;
             if (frag.querySelector("title") != null){
@@ -109,19 +102,50 @@ exports.postIndexing = (req, res, next) => {
                 description = frag.querySelector("description").textContent;
             }
 
-            const timeToIndex = Math.abs(endTime - startTime);
+            const timeToIndex = endTime - startTime;
 
-            //id, url, title, description, lastModified, lastIndexed, timeToIndex
-            const page = new Page(null, url, title, description, null, startTime, timeToIndex);
-            //console.log(page);
+            let pageId = Page.findIdByUrl(url);
+            pageId.then(function(result) {
+                const firstObj = result[0];
+                if (firstObj[0] == null) {
+                    //id, url, title, description, lastModified, lastIndexed, timeToIndex
+                    const page = new Page(null, url, title, description, startTime, startTime, timeToIndex);
+                    page.save();
+                    pageId = Page.getLastInsertId();
+                    console.log(pageId);
+                }
+                else {
+                    console.log(firstObj[0].pageId);
+                    const page = new Page(firstObj[0].pageId, url, title, description, null, startTime, timeToIndex);
 
-            const words = htmlBody.split(/\s+/);
-            //console.log(words);
+                    //complete update function to simply update the lastIndexed
+                    page.update();
 
-            words.forEach(function(parsedWord){
-                const word = new Word(null, parsedWord);
-                word.save();
-            })
+                    
+                }
+
+                const words = htmlBody.split(/\s+/);
+
+                //add words to a map to calculate frequency
+                const wordMap = new Map();
+                words.forEach(function (parsedWord){
+                    if (wordMap.has(parsedWord)){
+                        wordMap.set(parsedWord, wordMap.get(parsedWord) + 1);
+                    }
+                    else {
+                        wordMap.set(parsedWord, 1);
+                    }
+                });
+
+                wordMap.forEach(function(value, key, map){
+                    let word = new Word(null, key);
+                    word.save();
+                    let wordId = Word.getLastInsertId();
+                    let pageWord = new PageWord(null, pageId, wordId, value);
+                    pageWord.save();
+                });
+            });
+
     
             res.status(201).json({
                 message: 'Indexing successful',
