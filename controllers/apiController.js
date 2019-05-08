@@ -91,6 +91,7 @@ exports.postIndexing = (req, res, next) => {
             const frag = JSDOM.fragment(JSON.stringify(htmlBody));
 
             const endTime = new Date();
+            const words = htmlBody.split(/\s+/);
 
             let title = null;
             if (frag.querySelector("title") != null){
@@ -104,53 +105,65 @@ exports.postIndexing = (req, res, next) => {
 
             const timeToIndex = endTime - startTime;
 
-            let pageId = Page.findIdByUrl(url);
-            pageId.then(function(result) {
-                const firstObj = result[0];
-                if (firstObj[0] == null) {
-                    //id, url, title, description, lastModified, lastIndexed, timeToIndex
-                    const page = new Page(null, url, title, description, startTime, startTime, timeToIndex);
-                    page.save();
-                    pageId = Page.getLastInsertId();
-                    console.log(pageId);
-                }
-                else {
-                    console.log(firstObj[0].pageId);
-                    const page = new Page(firstObj[0].pageId, url, title, description, null, startTime, timeToIndex);
-
-                    //complete update function to simply update the lastIndexed
-                    page.update();
-
-                    
-                }
-
-                const words = htmlBody.split(/\s+/);
-
-                //add words to a map to calculate frequency
-                const wordMap = new Map();
-                words.forEach(function (parsedWord){
-                    if (wordMap.has(parsedWord)){
-                        wordMap.set(parsedWord, wordMap.get(parsedWord) + 1);
-                    }
-                    else {
-                        wordMap.set(parsedWord, 1);
-                    }
-                });
-
-                wordMap.forEach(function(value, key, map){
-                    let word = new Word(null, key);
-                    word.save();
-                    let wordId = Word.getLastInsertId();
-                    let pageWord = new PageWord(null, pageId, wordId, value);
-                    pageWord.save();
-                });
-            });
-
+            insertPageAndGetId(url, title, description, timeToIndex, startTime, words, processWordsAndUpload);
     
             res.status(201).json({
                 message: 'Indexing successful',
                 url: url
             });
         }
+    });
+}
+
+function insertPageAndGetId(url, title, description, timeToIndex, startTime, words, callback){
+    console.log("in insertPageAndGetId");
+    console.log(words);
+
+    let pageId = Page.findIdByUrl(url);
+    pageId.then(function(result) {
+        const firstObj = result[0];
+        if (firstObj[0] == null) {
+            const page = new Page(null, url, title, description, startTime, startTime, timeToIndex);
+            page.save();
+            const insertedPageId = Page.getLastInsertId();
+            insertedPageId.then(function(result) {
+                callback(result, words);
+            });
+            
+        }
+        else {
+            const page = new Page(firstObj[0].pageId, url, title, description, null, startTime, timeToIndex);
+            page.update();
+            callback(firstObj[0].pageId, words);
+        }
+    });
+}
+
+function processWordsAndUpload(pageId, words){
+    console.log("in processWordsAndUpload");
+    console.log(words);
+
+    //add words to a map to calculate frequency
+    const wordMap = new Map();
+    words.forEach(function (parsedWord){
+        if (wordMap.has(parsedWord)){
+            wordMap.set(parsedWord, wordMap.get(parsedWord) + 1);
+        }
+        else {
+            wordMap.set(parsedWord, 1);
+        }
+    });
+
+    wordMap.forEach(function(value, key, map){
+        let word = new Word(null, key);
+        word.save();
+        let wordId = Word.getLastInsertId();
+        wordId.then(function(result) {
+            const resultJson = result[0];
+            const idJson = resultJson[0];
+            console.log(pageId + " " + idJson["LAST_INSERT_ID()"] + " " + value);
+            //let pageWord = new PageWord(null, pageId, result, value);
+            //pageWord.save();
+        });
     });
 }

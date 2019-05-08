@@ -19,7 +19,7 @@ module.exports = class Page {
     }
 
     update() {
-
+      return db.execute('UPDATE page SET lastIndexed = ? WHERE pageId = ?', [this.lastIndexed, this.id]);
     }
   
     static fetchAll() {
