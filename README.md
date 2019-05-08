@@ -60,8 +60,17 @@ password: password
 ```src="/javascripts/example.js"```
 
 ## HTTP requests
-* Get requests can be made to `/getAllWords` and `/getAllPages`
-* Post requests can be made to `/insertWord` and `/insertPage` by passing all the necessary columns as a json object (ID's are not passed as they are auto-incremented in MySQL)
+* GET /api/pageWord/:searchWord/:partialMatch/:caseInsensitive
+Replace the ':searchWord' ':partialMatch' ':caseInsensitive' in the url with the appropriate values
+```ex: /api/pageWord/testword/true/false```
+
+* GET /api/search gets all searches
+
+
+* POST /api/search
+
+
+* POST /api/indexing (crawling)
 
 ## Database Schemas
 ### Page table columns

@@ -72,15 +72,15 @@ exports.postSearch = (req, res, next) => {
 
 exports.postIndexing = (req, res, next) => {
     const url = req.body.url;
-    
+    let htmlBody;
+
     request(url, function (err, res, body) {
-        if(err)
-        {
+        if(err) {
             console.log(err, "error occured while hitting URL");
         }
-        else
-        {
-            console.log(body);
+        else {
+            htmlBody = cheerio.load(body);
+            console.log(htmlBody);
             console.log("URL: " + url);
         }
     });
