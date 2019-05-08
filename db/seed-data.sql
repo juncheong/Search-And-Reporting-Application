@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `page`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `page` (
   `pageId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `url` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL UNIQUE,
   `title` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `lastModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -81,7 +81,7 @@ DROP TABLE IF EXISTS `search`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `search` (
   `searchId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `terms` varchar(255) NOT NULL,
+  `terms` varchar(255) NOT NULL UNIQUE,
   `count` int(10) unsigned NOT NULL,
   `searchDate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `timeToSearch` int(10) unsigned NOT NULL,
@@ -107,7 +107,7 @@ DROP TABLE IF EXISTS `word`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `word` (
   `wordId` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `wordName` varchar(255) NOT NULL,
+  `wordName` varchar(255) NOT NULL UNIQUE,
   PRIMARY KEY (`wordId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

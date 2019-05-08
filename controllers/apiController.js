@@ -1,5 +1,4 @@
 const request = require('request');
-const cheerio = require('cheerio');
 
 const db = require('../util/db_' + process.env.NODE_ENV);
 
@@ -72,16 +71,32 @@ exports.postSearch = (req, res, next) => {
 
 exports.postIndexing = (req, res, next) => {
     const url = req.body.url;
-    let htmlBody;
 
-    request(url, function (err, res, body) {
+    request(url, function (err, reqRes, body) {
         if(err) {
             console.log(err, "error occured while hitting URL");
+
+            res.status(502).json({
+                message: 'Indexing unsuccessful',
+                url: url
+            });
         }
         else {
-            htmlBody = cheerio.load(body);
+            const htmlBody = body;
             console.log(htmlBody);
-            console.log("URL: " + url);
+
+            const words = htmlBody.split(/\s+/);
+            console.log(words);
+
+            words.forEach(function(parsedWord){
+                const word = new Word(null, parsedWord);
+                word.save();
+            })
+    
+            res.status(201).json({
+                message: 'Indexing successful',
+                url: url
+            });
         }
     });
 }

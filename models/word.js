@@ -1,13 +1,13 @@
 const db = require('../util/db_' + process.env.NODE_ENV);
 
 module.exports = class word {
-    constructor(id, word) {
+    constructor(id, wordName) {
         this.id = id;
-        this.word = word;
+        this.wordName = wordName;
       }
     
       save() {
-        return db.execute('INSERT INTO word (word) VALUES (?)', [this.word]);
+        return db.execute('INSERT IGNORE INTO word (wordName) VALUES (?)', [this.wordName]);
       }
     
       static deleteById(id) {
