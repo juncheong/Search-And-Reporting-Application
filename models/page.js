@@ -1,11 +1,11 @@
 const db = require('../util/db_' + process.env.NODE_ENV);
 
 module.exports = class page {
-    constructor(id, url, description, title, lastModified, lastIndexed, timeToIndex) {
+    constructor(id, url, title, description, lastModified, lastIndexed, timeToIndex) {
         this.id = id;
         this.url = url;
-        this.description = description;
         this.title = title;
+        this.description = description;
         this.lastModified = lastModified;
         this.lastIndexed = lastIndexed;
         this.timeToIndex = timeToIndex;
@@ -13,8 +13,8 @@ module.exports = class page {
     
       save() {
         return db.execute(
-            'INSERT INTO page (url, description, title, lastModified, lastIndexed, timeToIndex) VALUES (?, ?, ?, ?, ?, ?)',
-            [this.url, this.description, this.title, this.lastModified, this.lastIndexed, this.timeToIndex]
+            'INSERT INTO page (url, title, description, lastModified, lastIndexed, timeToIndex) VALUES (?, ?, ?, ?, ?, ?) ',
+            [this.url, this.title, this.description, this.lastModified, this.lastIndexed, this.timeToIndex]
         );
       }
     
@@ -27,6 +27,10 @@ module.exports = class page {
       }
     
       static findById(id) {
-        return db.execute('SELECT * FROM `page` WHERE `pageId` = ?', [id])  
+        return db.execute('SELECT * FROM `page` WHERE `pageId` = ?', [id]);
+      }
+
+      static findIdByUrl(url){
+        return db.execute('SELECT pageId FROM `page` WHERE page.url = ?', [url]);
       }
 };

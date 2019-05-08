@@ -7,6 +7,9 @@ const Page = require('../models/page');
 const Search = require('../models/search');
 const pageWord = require('../models/pageWord');
 
+const jsdom = require("jsdom");
+const { JSDOM } = jsdom;
+
 exports.getPageWord = (req, res, next) => {
     // /pageWord/:searchWord/:partialMatch/:caseInensitive
 
@@ -72,6 +75,8 @@ exports.postSearch = (req, res, next) => {
 exports.postIndexing = (req, res, next) => {
     const url = req.body.url;
 
+    const startTime = new Date();
+
     request(url, function (err, reqRes, body) {
         if(err) {
             console.log(err, "error occured while hitting URL");
@@ -83,10 +88,35 @@ exports.postIndexing = (req, res, next) => {
         }
         else {
             const htmlBody = body;
-            console.log(htmlBody);
+            //console.log(htmlBody);
+
+            const frag = JSDOM.fragment(JSON.stringify(htmlBody));
+
+            const endTime = new Date();
+
+            const pageId = Page.findIdByUrl(url);
+            pageId.then(function(result) {
+                console.log(result[0]);
+            })
+
+            let title = null;
+            if (frag.querySelector("title") != null){
+                title = frag.querySelector("title").textContent;
+            }
+            
+            let description = null;
+            if (frag.querySelector("description") != null){
+                description = frag.querySelector("description").textContent;
+            }
+
+            const timeToIndex = Math.abs(endTime - startTime);
+
+            //id, url, title, description, lastModified, lastIndexed, timeToIndex
+            const page = new Page(null, url, title, description, null, startTime, timeToIndex);
+            //console.log(page);
 
             const words = htmlBody.split(/\s+/);
-            console.log(words);
+            //console.log(words);
 
             words.forEach(function(parsedWord){
                 const word = new Word(null, parsedWord);
