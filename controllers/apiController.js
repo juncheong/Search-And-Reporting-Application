@@ -11,42 +11,44 @@ const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
 exports.getPageWord = (req, res, next) => {
-    // /pageWord/:searchWord/:partialMatch/:caseInensitive
+    // /pageWord/:searchWord/:partialMatch/:caseInsensitive
 
-    const searchWord = req.params.searchWord;
-    const partialMatch = req.params.partialMatch;
-    const caseInsensitive = req.params.caseInsensitive;
+    let searchWord = req.params.searchWord;
+    let partialMatch = req.params.partialMatch;
+    let caseInsensitive = req.params.caseInsensitive;
 
     let query = 
     "SELECT * FROM page, word, page_word " + 
     "WHERE page.pageId = page_word.pageId " +
     "AND word.wordId = page_word.wordId ";
 
-    if (partialMatch && caseInsensitive) {
+    if (partialMatch == 'true' && caseInsensitive == 'true') {
         query += "AND UPPER(word.wordName) LIKE UPPER('%" + searchWord + "%') ";
     }
-    else if (caseInsensitive) {
-        query += "AND UPPER(word.wordName) = UPPER(" + searchWord + ") ";
+    else if (caseInsensitive == 'true') {
+        query += "AND UPPER(word.wordName) = UPPER('" + searchWord + "') ";
     }
-    else if (partialMatch) {
+    else if (partialMatch == 'true') {
         query += "AND word.wordName LIKE '%" + searchWord + "%' ";
     }
     else {
-        query += "AND word.wordName = " + searchWord + " ";
+        query += "AND word.wordName = '" + searchWord + "' ";
     }
 
     query += "ORDER BY freq";
 
-    const queryResult = db.execute(query);
+    let queryResult = db.execute(query);
 
-    res.status(200).json({
-        result: queryResult, 
-        queryData: [{
-            searchWord: searchWord,
-            partialMatch: partialMatch,
-            caseInsensitive: caseInsensitive
-        }]
-    });
+    queryResult.then(function(results) {
+        res.status(200).json({
+            result: results[0], 
+            queryData: [{
+                searchWord: searchWord,
+                partialMatch: partialMatch,
+                caseInsensitive: caseInsensitive
+            }]
+        });
+    })
 };
 
 exports.getAllSearch = (req, res, next) => {
@@ -124,18 +126,18 @@ function insertPageAndGetId(url, title, description, timeToIndex, startTime, wor
         if (firstObj[0] == null) {
             const page = new Page(null, url, title, description, startTime, startTime, timeToIndex);
             page.save().then(function(unusedResult) {
-                const insertedPageId = Page.getLastInsertId();
+                const insertedPageId = Page.getMaxId();
                 insertedPageId.then(function(result) {
                     const resultJson = result[0];
                     const idJson = resultJson[0];
-                    return callback(idJson["max(pageId)"], words);
+                    callback(idJson["max(pageId)"], words);
                 });
             });
         }
         else {
             const page = new Page(firstObj[0].pageId, url, title, description, null, startTime, timeToIndex);
             page.update();
-            return callback(firstObj[0].pageId, words);
+            callback(firstObj[0].pageId, words);
         }
     });
 }
@@ -155,16 +157,13 @@ function processWordsAndUpload(pageId, words){
     wordMap.forEach(function(value, key, map){
         let word = new Word(null, key);
         word.save().then(function(unusedResult) {
-            let wordId = Word.getLastInsertId();
-            wordId.then(function(result) {
-                const resultJson = result[0];
-                const idJson = resultJson[0];
-                if (idJson["max(wordId)"] > 0){
-                    let pageWord = new PageWord(null, pageId, idJson["max(wordId)"], value);
-                    pageWord.save().then(function(anotherUnusedResult) {});
-                }
+            let wordIdByName = Word.findByWordName(key);
+            wordIdByName.then(function(resultIdbyName) {
+                let resultIdbyNameJson = resultIdbyName[0];
+                let idByNameJson = resultIdbyNameJson[0];
+                let pageWord = new PageWord(null, pageId, idByNameJson["wordId"], value);
+                pageWord.save().then(function(anotherUnusedResult) {/* here just as a callback to wait */});
             });
         });
     });
-    return 0;
 }

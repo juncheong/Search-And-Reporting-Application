@@ -15,10 +15,14 @@ module.exports = class Word {
     }
   
     static findById(id) {
-      return db.execute('SELECT * FROM `word` WHERE `wordId` = ?', [id])  
+      return db.execute('SELECT * FROM `word` WHERE `wordId` = ?', [id]);  
     }
 
-    static getLastInsertId(){
+    static findByWordName(wordName){
+      return db.execute('SELECT wordId FROM word WHERE wordName = ?', [wordName]);
+    }
+
+    static getMaxId(){
       //return db.execute('SELECT LAST_INSERT_ID()');
       return db.execute('SELECT max(wordId) FROM word');
     }
