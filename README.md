@@ -61,16 +61,34 @@ password: password
 
 ## HTTP requests
 * GET /api/pageWord/:searchWord/:partialMatch/:caseInsensitive
+
+Displays all indexed pages & words
 Replace the ':searchWord' ':partialMatch' ':caseInsensitive' in the url with the appropriate values
+
 ```ex: /api/pageWord/testword/true/false```
 
-* GET /api/search gets all searches
+* GET /api/search 
 
+Gets all searches
 
 * POST /api/search
 
+Send a JSON object in the body with these fields
+
+```terms```
+```count```
+```searchDate```
+```timeToSearch```
+
+Note that searchDate is a timestamp in MySQL so you should create a new Date() and pass that
+Note that timeToSearch is an int in MySQL meaning that it's in milliseconds. You should record start time & end time and pass the difference 
+
 
 * POST /api/indexing (crawling)
+
+Send a JSON object in the body with this one field
+
+```url```
 
 ## Database Schemas
 ### Page table columns
