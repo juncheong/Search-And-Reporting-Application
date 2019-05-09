@@ -40,7 +40,6 @@ CREATE TABLE `page` (
 
 LOCK TABLES `page` WRITE;
 /*!40000 ALTER TABLE `page` DISABLE KEYS */;
-INSERT INTO page (url, title, description, lastModified, lastIndexed, timeToIndex) VALUES ('https://www.themusiczoo.com/', 'someTitle', 'Something', NULL, NULL, NULL);
 /*!40000 ALTER TABLE `page` ENABLE KEYS */;
 UNLOCK TABLES;
 

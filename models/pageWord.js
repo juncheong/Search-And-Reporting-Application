@@ -10,7 +10,7 @@ module.exports = class PageWord {
   
     save() {
       return db.execute(
-          'INSERT INTO `page_word` (pageId, wordId, freq) VALUES (?, ?, ?)',
+          'INSERT INTO page_word (pageId, wordId, freq) VALUES (?, ?, ?)',
           [this.pageId, this.wordId, this.freq]
       );
     }

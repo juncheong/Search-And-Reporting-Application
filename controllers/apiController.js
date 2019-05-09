@@ -106,48 +106,46 @@ exports.postIndexing = (req, res, next) => {
             const timeToIndex = endTime - startTime;
 
             insertPageAndGetId(url, title, description, timeToIndex, startTime, words, processWordsAndUpload);
-    
-            res.status(201).json({
-                message: 'Indexing successful',
+
+            res.status(200).json({
+                message: 'Request received',
                 url: url
             });
+
         }
     });
 }
 
 function insertPageAndGetId(url, title, description, timeToIndex, startTime, words, callback){
-    console.log("in insertPageAndGetId");
-    console.log(words);
 
     let pageId = Page.findIdByUrl(url);
     pageId.then(function(result) {
         const firstObj = result[0];
         if (firstObj[0] == null) {
             const page = new Page(null, url, title, description, startTime, startTime, timeToIndex);
-            page.save();
-            const insertedPageId = Page.getLastInsertId();
-            insertedPageId.then(function(result) {
-                callback(result, words);
+            page.save().then(function(unusedResult) {
+                const insertedPageId = Page.getLastInsertId();
+                insertedPageId.then(function(result) {
+                    const resultJson = result[0];
+                    const idJson = resultJson[0];
+                    return callback(idJson["max(pageId)"], words);
+                });
             });
-            
         }
         else {
             const page = new Page(firstObj[0].pageId, url, title, description, null, startTime, timeToIndex);
             page.update();
-            callback(firstObj[0].pageId, words);
+            return callback(firstObj[0].pageId, words);
         }
     });
 }
 
 function processWordsAndUpload(pageId, words){
-    console.log("in processWordsAndUpload");
-    console.log(words);
-
-    //add words to a map to calculate frequency
+    
     const wordMap = new Map();
     words.forEach(function (parsedWord){
         if (wordMap.has(parsedWord)){
-            wordMap.set(parsedWord, wordMap.get(parsedWord) + 1);
+            wordMap.set(parsedWord, (wordMap.get(parsedWord)) + 1);
         }
         else {
             wordMap.set(parsedWord, 1);
@@ -156,14 +154,17 @@ function processWordsAndUpload(pageId, words){
 
     wordMap.forEach(function(value, key, map){
         let word = new Word(null, key);
-        word.save();
-        let wordId = Word.getLastInsertId();
-        wordId.then(function(result) {
-            const resultJson = result[0];
-            const idJson = resultJson[0];
-            console.log(pageId + " " + idJson["LAST_INSERT_ID()"] + " " + value);
-            //let pageWord = new PageWord(null, pageId, result, value);
-            //pageWord.save();
+        word.save().then(function(unusedResult) {
+            let wordId = Word.getLastInsertId();
+            wordId.then(function(result) {
+                const resultJson = result[0];
+                const idJson = resultJson[0];
+                if (idJson["max(wordId)"] > 0){
+                    let pageWord = new PageWord(null, pageId, idJson["max(wordId)"], value);
+                    pageWord.save().then(function(anotherUnusedResult) {});
+                }
+            });
         });
     });
+    return 0;
 }

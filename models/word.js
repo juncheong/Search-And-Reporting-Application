@@ -19,6 +19,7 @@ module.exports = class Word {
     }
 
     static getLastInsertId(){
-      return db.execute('SELECT LAST_INSERT_ID()');
+      //return db.execute('SELECT LAST_INSERT_ID()');
+      return db.execute('SELECT max(wordId) FROM word');
     }
 };

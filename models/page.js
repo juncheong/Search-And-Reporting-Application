@@ -35,6 +35,7 @@ module.exports = class Page {
     }
 
     static getLastInsertId(){
-      return db.execute('SELECT LAST_INSERT_ID()');
+      //return db.execute('SELECT LAST_INSERT_ID()');
+      return db.execute('SELECT max(pageId) FROM page');
     }
 };
