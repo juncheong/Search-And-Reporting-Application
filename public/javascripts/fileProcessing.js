@@ -287,7 +287,7 @@ function findCheckedRows() {
     string += '\n]\n}';
   else if (type == "xml")
     string += '</results>\n';
-  alert(string);
+  //alert(string);
   return string;
 }
 function parseRow(row) {
