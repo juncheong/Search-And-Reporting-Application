@@ -234,18 +234,15 @@ function createFile () {
   var type = list.options[list.selectedIndex].value;
   var fileContent = findCheckedRows();
   if (type == "json") {
-    var cleanScript = {
-      'type': 'script'
-    };
-    var jsonse = JSON.stringify(cleanScript);
-    var blob = new Blob([jsonse], {type: "application/json"});
+    //var jsonse = JSON.stringify(fileContent);
+    var blob = new Blob([fileContent], {type: "application/json"});
     var url  = URL.createObjectURL(blob);
 
     var link = document.getElementById('downloadlink');
 
     link.href        = url;
-    link.download    = "backup.json";
-    link.textContent = "Download backup.json";
+    link.download    = "Results.json";
+    link.textContent = "Download Results.json";
     link.style.display = 'block';
   }
   else if (type == "csv") {
@@ -260,38 +257,48 @@ function createFile () {
     link.style.display = 'block';
   }
   else if (type == "xml") {
-    var XML = "<bookstore><book>" +
-    "<title>Everyday Italian</title>" +
-    "<author>Giada De Laurentiis</author>" +
-    "<year>2005</year>" +
-    "</book></bookstore>";
-    var blob = new Blob([XML], {type: "text/xml"});
+    var blob = new Blob([fileContent], {type: "text/xml"});
     var url  = URL.createObjectURL(blob);
 
     var link = document.getElementById('downloadlink');
 
     link.href        = url;
-    link.download    = "backup.xml";
-    link.textContent = "Download backup.xml";
+    link.download    = "Results.xml";
+    link.textContent = "Download Results.xml";
     link.style.display = 'block';
   }
 }
-
 function findCheckedRows() {
+  var list = document.getElementById("fileList");
+  var type = list.options[list.selectedIndex].value;
   var string = '';
+  if (type == "json") 
+    string += '{\n\t"Result\" : [';
+  else if (type == "xml")
+    string += '<results>\n';
   var table = document.getElementById("results");
   for (var i = 1, row; row = table.rows[i]; i++) {
     console.log("row");
     if (row.children[0].childNodes[0].checked == true) 
       string += parseRow(row);
   }
+  string = string.substring(0, string.length-1);
+  if (type == "json") 
+    string += '\n]\n}';
+  else if (type == "xml")
+    string += '</results>\n';
   alert(string);
   return string;
 }
 function parseRow(row) {
   var list = document.getElementById("fileList");
   var type = list.options[list.selectedIndex].value;
+  var vals = ["title","url","description"];
   var string = '';
+  if (type == "json")
+    string = '\n{';
+  else if (type == 'xml')
+    string = '<result>\n';
   for (var j = 1, col; col = row.cells[j]; j++) {
     if (type == "csv") {
       string += '"' + (j==2 ? col.childNodes[0].href : col.innerHTML) + '"';
@@ -300,9 +307,19 @@ function parseRow(row) {
       else string += '\n';
     }
     else if (type == "json") {
-
+      string += '"'+ vals[j-1] +'":"' + (j==2 ? col.childNodes[0].href : col.innerHTML) + '"';
+      if (j < 3)
+        string += ',';
+      string += '\n';
+    }
+    else if (type == "xml") {
+      string += '<' + vals[j-1] + '>' + (j==2 ? col.childNodes[0].href : col.innerHTML) + '</' + vals[j-1] + '>\n';
     }
   }
+  if (type == "json")
+    string += "},";
+  else if (type == "xml")
+    string += '</result>\n';
   return string;
 }
 
