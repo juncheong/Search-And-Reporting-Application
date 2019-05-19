@@ -1,5 +1,8 @@
 var obj;
 var fileType;
+var extension;
+var create = document.getElementById('create');
+  create.style.display = 'none';
 function processFile() {
  var _validFileExtensions = [".json", ".xml", ".csv"];    
  var file = document.getElementById("up");
@@ -8,7 +11,7 @@ function processFile() {
   var blnValid = false;
   for (var j = 0; j < _validFileExtensions.length; j++) {
     var sCurExtension = _validFileExtensions[j];
-    var extension = fileName.substr(fileName.length - sCurExtension.length, sCurExtension.length).toLowerCase();
+    extension = fileName.substr(fileName.length - sCurExtension.length, sCurExtension.length).toLowerCase();
     if (extension == sCurExtension.toLowerCase()) {
       blnValid = true;
       console.log(extension);
@@ -60,7 +63,6 @@ function search () {
     <input type="button" id = "save" value="Save Results" onclick="dropdown()">
     `);
 }
-
 function dropdown () {
   $( "#dropdown" ).empty();
   $( "#dropdown" ).append(`
@@ -68,18 +70,16 @@ function dropdown () {
           <legend>Choose format of resulting file:</legend>
           <p>
              <label>Select list</label>
-             <select id = "myList">
+             <select id = "fileList">
                <option value = "json">.json</option>
                <option value = "csv">.csv</option>
                <option value = "xml">.xml</option>
              </select>
           </p>
        </fieldset>
-       <input type="button" value = "Download" id="saveSubmit" onclick = "saveResults()" />
   `);
-}
-function saveResults() {
-  alert("downloading");
+  var create = document.getElementById('create');
+  create.style.display = 'block';
 }
 function jsonSearch () {
   var query = document.getElementById("search_Field").value;
@@ -90,6 +90,7 @@ function jsonSearch () {
   $( "table" ).empty();
   $("table").append(`<thead class="thead-light">
                   <tr>
+                  <th scope="col"></th>
                   <th scope="col">Title</th>
                   <th scope="col">Website URL</th>
                   <th scope="col">Description</th>
@@ -102,6 +103,7 @@ function jsonSearch () {
       numResults++;
       $("tbody").append(`
                       <tr>
+                      <td><input type="checkbox" name="name1` + i + `"/></td>
                       <td>`+ obj.Result[i].title + `</td>
                       <td><a href="`+ obj.Result[i].url + `"">` + obj.Result[i].url + `</a></td>
                       <td>` + obj.Result[i].description + `</td>
@@ -129,6 +131,7 @@ function xmlSearch () {
   $( "table" ).empty();
   $("table").append(`<thead class="thead-light">
                   <tr>
+                  <th scope="col"></th>                  
                   <th scope="col">Title</th>
                   <th scope="col">Website URL</th>
                   <th scope="col">Description</th>
@@ -146,6 +149,7 @@ function xmlSearch () {
   $xml = $( xmlDoc ),
   $firstCookBook = $xml.find('result').find('title').first().text();
   //console.log($firstCookBook);
+  var i = 0;
   $xml.children('results').children('result').each(function(index) {
     var title = $( this ).find('title').text();
     if (title.toUpperCase().indexOf(query) !== -1) {
@@ -153,12 +157,14 @@ function xmlSearch () {
       numResults++;
       $("tbody").append(`
                       <tr>
+                      <td><input type="checkbox" name="name` + i + `" /></td>
                       <td>`+ title + `</td>
                       <td><a href="`+ $( this ).find('url').text() + `"">` + $( this ).find('url').text() + `</a></td>
                       <td>` + $( this ).find('description').text() + `</td>
                       </tr>
       `);
     }
+    i++;
   })
   if (numResults == 0) {
     $("tbody").append(`
@@ -180,6 +186,7 @@ function csvSearch () {
   $( "table" ).empty();
   $("table").append(`<thead class="thead-light">
                   <tr>
+                  <th scope="col"></th>
                   <th scope="col">Title</th>
                   <th scope="col">Website URL</th>
                   <th scope="col">Description</th>
@@ -199,6 +206,7 @@ function csvSearch () {
       numResults++;
       $("tbody").append(`
                       <tr>
+                      <td><input type="checkbox" name="name` + i + `" /></td>
                       <td>`+ title + `</td>
                       <td><a href="`+ array[1] + `"">` + array[1] + `</a></td>
                       <td>` + array[2] + `</td>
@@ -220,6 +228,82 @@ function csvSearch () {
                     </tr>
     `);
   }
+}
+function createFile () {
+  var list = document.getElementById("fileList");
+  var type = list.options[list.selectedIndex].value;
+  var fileContent = findCheckedRows();
+  if (type == "json") {
+    var cleanScript = {
+      'type': 'script'
+    };
+    var jsonse = JSON.stringify(cleanScript);
+    var blob = new Blob([jsonse], {type: "application/json"});
+    var url  = URL.createObjectURL(blob);
+
+    var link = document.getElementById('downloadlink');
+
+    link.href        = url;
+    link.download    = "backup.json";
+    link.textContent = "Download backup.json";
+    link.style.display = 'block';
+  }
+  else if (type == "csv") {
+    var csvFile = new Blob([fileContent], {type: 'text/csv'});
+    var url  = URL.createObjectURL(csvFile);
+
+    var link = document.getElementById('downloadlink');
+
+    link.href        = url;
+    link.download    = "Results.csv";
+    link.textContent = "Download Results.csv";
+    link.style.display = 'block';
+  }
+  else if (type == "xml") {
+    var XML = "<bookstore><book>" +
+    "<title>Everyday Italian</title>" +
+    "<author>Giada De Laurentiis</author>" +
+    "<year>2005</year>" +
+    "</book></bookstore>";
+    var blob = new Blob([XML], {type: "text/xml"});
+    var url  = URL.createObjectURL(blob);
+
+    var link = document.getElementById('downloadlink');
+
+    link.href        = url;
+    link.download    = "backup.xml";
+    link.textContent = "Download backup.xml";
+    link.style.display = 'block';
+  }
+}
+
+function findCheckedRows() {
+  var string = '';
+  var table = document.getElementById("results");
+  for (var i = 1, row; row = table.rows[i]; i++) {
+    console.log("row");
+    if (row.children[0].childNodes[0].checked == true) 
+      string += parseRow(row);
+  }
+  alert(string);
+  return string;
+}
+function parseRow(row) {
+  var list = document.getElementById("fileList");
+  var type = list.options[list.selectedIndex].value;
+  var string = '';
+  for (var j = 1, col; col = row.cells[j]; j++) {
+    if (type == "csv") {
+      string += '"' + (j==2 ? col.childNodes[0].href : col.innerHTML) + '"';
+      if (j < 3)
+        string += ',';
+      else string += '\n';
+    }
+    else if (type == "json") {
+
+    }
+  }
+  return string;
 }
 
         
