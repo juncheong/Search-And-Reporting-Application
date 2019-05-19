@@ -24,6 +24,14 @@ exports.getOurSearchEngine = (req, res, next) => {
     res.sendFile(path.join(rootDir, 'views', 'ourSearchEngine.html'));
 }
 
+exports.getAdminStats = (req, res, next) => {
+    res.sendFile(path.join(rootDir, 'views', 'adminStats.html'));
+}
+
+exports.getAdminIndex = (req, res, next) => {
+    res.sendFile(path.join(rootDir, 'views', 'adminIndex.html'));
+}
+
 exports.getAllWords = (req, res, next) => {
     Word.fetchAll()
         .then((words) => {

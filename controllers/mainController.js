@@ -34,3 +34,11 @@ exports.getScreen = (req, res, next) => {
 exports.getWindow = (req, res, next) => {
     res.sendFile(path.join(rootDir, 'views', 'window.html'));
 }
+
+exports.getAdminStats = (req, res, next) => {
+    res.sendFile(path.join(rootDir, 'views', 'adminStats.html'));
+}
+
+exports.getAdminIndex = (req, res, next) => {
+    res.sendFile(path.join(rootDir, 'views', 'adminIndex.html'));
+}

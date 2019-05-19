@@ -22,5 +22,10 @@ router.post('/insertPage', searchController.postInsertPage);
 
 router.get('/test.html', searchController.getTest);
 
+router.get('/adminIndex.html', searchController.getAdminIndex);
+
+router.get('/adminStats.html', searchController.getAdminStats);
+
+
 
 module.exports = router;

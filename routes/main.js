@@ -22,4 +22,9 @@ router.get('/screen.html', mainController.getScreen);
 
 router.get('/window.html', mainController.getWindow);
 
+router.get('/adminIndex.html', mainController.getAdminIndex);
+
+router.get('/adminStats.html', mainController.getAdminStats);
+
+
 module.exports = router;
