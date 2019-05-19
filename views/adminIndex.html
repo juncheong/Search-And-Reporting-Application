@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/public/stylesheets/index.css">
     <script src="/javascripts/navigation.js"></script>
+    <script src="/javascripts/search.js"></script>
     <style>
         .input-group {
            position: absolute;
@@ -18,9 +19,9 @@
     <h1>Admin Index</h1>
 
     <div class="input-group mb-6 col-6 ">
-        <input type="text" class="form-control" placeholder="Enter URL to index" ria-label="searchbar1" aria-describedby="basic-addon2">
+        <input type="text" id = 'urlText' class="form-control" placeholder="Enter URL to index" ria-label="searchbar1" aria-describedby="basic-addon2">
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button">Search</button>
+          <button class="btn btn-outline-secondary" type="button" onclick = "postToDatabase()">Search</button>
         </div>
       </div>
     
