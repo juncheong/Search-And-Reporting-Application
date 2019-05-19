@@ -7,7 +7,7 @@ document.write(`<head>
 </head>
 <header>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="index.html">Home</a>
+    <a href="index.html"> <img class="navbar-brand" src="../resources/images/lightning.png" alt="Home"> </a>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Course</a>
