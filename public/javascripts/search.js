@@ -35,7 +35,7 @@ function search () {
   		  console.log(Http.responseText);
 		  text = Http.responseText;
 		  displayResults();
-		  postSearch();
+		  var jsonString = findCheckedRows(JSON);
 		}
 	};
 	Http.send();
@@ -80,7 +80,6 @@ function displayResults () {
                       <td>`+ obj.result[i].freq + `</td>
                       </tr>
       `);
-
 	}
 	if (numResults == 0) {
     $("tbody").append(`
@@ -104,6 +103,7 @@ function displayResults () {
     <input type="button" id = "save" value="Save Results" onclick="dropdown()">
     `);
 }
+
 function dropdown () {
   $( "#dropdown" ).empty();
   $( "#dropdown" ).append(`
@@ -161,6 +161,7 @@ function createFile () {
     link.style.display = 'block';
   }
 }
+
 function findCheckedRows() {
   var list = document.getElementById("fileList");
   var type = list.options[list.selectedIndex].value;
@@ -229,7 +230,8 @@ function getAllSearches() {
   Http.send();
 }
 
-function postSearch() {
+// left todo parse the json returned in search and pass it into this function
+function postSearch(string) {
 	const Http = new XMLHttpRequest();
 	var e = document.getElementById();
 	const url= e.value;
