@@ -1,3 +1,5 @@
+var create = document.getElementById('create');
+  create.style.display = 'none';
 function postToDatabase() {
 	const Http = new XMLHttpRequest();
 	var e = document.getElementById('urlText');
@@ -37,7 +39,6 @@ function search () {
 	Http.send();
 }
 function displayResults () {
-	alert(text);
 	var obj = JSON.parse(text);
 	$("table").append(`<thead class="thead-light">
             	  <tr>
@@ -93,8 +94,125 @@ function displayResults () {
                     </tr>
     	`);
   	}
-}
+  	$( "#save" ).remove();
+  $( "#saveSubmit" ).remove();
 
+  $( "#dropdown" ).empty();
+  $( "table" ).after(`
+    <input type="button" id = "save" value="Save Results" onclick="dropdown()">
+    `);
+}
+function dropdown () {
+  $( "#dropdown" ).empty();
+  $( "#dropdown" ).append(`
+       <fieldset>
+          <legend>Choose format of resulting file:</legend>
+          <p>
+             <label>Select list</label>
+             <select id = "fileList">
+               <option value = "json">.json</option>
+               <option value = "csv">.csv</option>
+               <option value = "xml">.xml</option>
+             </select>
+          </p>
+       </fieldset>
+  `);
+  var create = document.getElementById('create');
+  create.style.display = 'block';
+}
+function createFile () {
+  var list = document.getElementById("fileList");
+  var type = list.options[list.selectedIndex].value;
+  var fileContent = findCheckedRows();
+  if (type == "json") {
+    //var jsonse = JSON.stringify(fileContent);
+    var blob = new Blob([fileContent], {type: "application/json"});
+    var url  = URL.createObjectURL(blob);
+
+    var link = document.getElementById('downloadlink');
+
+    link.href        = url;
+    link.download    = "Results.json";
+    link.textContent = "Download Results.json";
+    link.style.display = 'block';
+  }
+  else if (type == "csv") {
+    var csvFile = new Blob([fileContent], {type: 'text/csv'});
+    var url  = URL.createObjectURL(csvFile);
+
+    var link = document.getElementById('downloadlink');
+
+    link.href        = url;
+    link.download    = "Results.csv";
+    link.textContent = "Download Results.csv";
+    link.style.display = 'block';
+  }
+  else if (type == "xml") {
+    var blob = new Blob([fileContent], {type: "text/xml"});
+    var url  = URL.createObjectURL(blob);
+
+    var link = document.getElementById('downloadlink');
+
+    link.href        = url;
+    link.download    = "Results.xml";
+    link.textContent = "Download Results.xml";
+    link.style.display = 'block';
+  }
+}
+function findCheckedRows() {
+  var list = document.getElementById("fileList");
+  var type = list.options[list.selectedIndex].value;
+  var string = '';
+  if (type == "json") 
+    string += '{\n\t"Result\" : [';
+  else if (type == "xml")
+    string += '<results>\n';
+  var table = document.getElementById("results");
+  for (var i = 1, row; row = table.rows[i]; i++) {
+    console.log("row");
+    if (row.children[0].childNodes[0].checked == true) 
+      string += parseRow(row);
+  }
+  string = string.substring(0, string.length-1);
+  if (type == "json") 
+    string += '\n]\n}';
+  else if (type == "xml")
+    string += '</results>\n';
+  //alert(string);
+  return string;
+}
+function parseRow(row) {
+  var list = document.getElementById("fileList");
+  var type = list.options[list.selectedIndex].value;
+  var vals = ["pageId","url","title","description","lastModified","lastIndexed","timeToIndex","wordId", "wordName","pageWordId", "Frequency"];
+  var string = '';
+  if (type == "json")
+    string = '\n{';
+  else if (type == 'xml')
+    string = '<result>\n';
+  for (var j = 1, col; col = row.cells[j]; j++) {
+    if (type == "csv") {
+      string += '"' + (j==2 ? col.childNodes[0].href : col.innerHTML) + '"';
+      if (j < 11)
+        string += ',';
+      else string += '\n';
+    }
+    else if (type == "json") {
+      string += '"'+ vals[j-1] +'":"' + (j==2 ? col.childNodes[0].href : col.innerHTML) + '"';
+      if (j < 11)
+        string += ',';
+      string += '\n';
+    }
+    else if (type == "xml") {
+      string += '<' + vals[j-1] + '>' + (j==2 ? col.childNodes[0].href : col.innerHTML) + '</' + vals[j-1] + '>\n';
+    }
+  }
+  if (type == "json")
+    string += "},";
+  else if (type == "xml")
+    string += '</result>\n';
+  return string;
+}
 function getAllSearches() {
 	const Http = new XMLHttpRequest();
 	Http.open("GET", "api/search");	

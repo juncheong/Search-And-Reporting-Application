@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/stylesheets/index.css">
     <script src="/javascripts/navigation.js"></script>
-    <script src="/javascripts/search.js"></script>
 
     <style>
         .dpd {
@@ -49,10 +48,19 @@
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="button" onclick = "search()">Search</button>
         </div>
+        
     </div>
     <br><br><br>
     <table id = "results" class="table col-9">
     
     </table>
+    <br>
+    <form id = "dropdown">
+
+    </form>
+    <button id="create" style=" = display: none" onclick="createFile()">Generate File</button> 
+    <a download="info.txt" id="downloadlink" style="display: none">Download File</a>
 </body>
+    <script src="/javascripts/search.js"></script>
+
 </html>
