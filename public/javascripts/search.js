@@ -33,6 +33,7 @@ function search () {
   		  console.log(Http.responseText);
 		  text = Http.responseText;
 		  displayResults();
+		  postSearch();
 		}
 	};
 	Http.send();
@@ -108,4 +109,17 @@ function getAllSearches() {
 	  }
   };
   Http.send();
+}
+
+function postSearch() {
+	const Http = new XMLHttpRequest();
+	var e = document.getElementById();
+	const url= e.value;
+	console.log(url);
+	Http.open("POST", "api/search");	
+	Http.setRequestHeader("Content-Type", "application/json");
+	Http.send(jString);
+	Http.onreadystatechange=(e)=>{
+	console.log(Http.responseText)
+	}
 }
