@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/public/stylesheets/index.css">
     <script src="/javascripts/navigation.js"></script>
+    <script src="/javascripts/search.js"></script>
     <style>
         .dpd {
           position: absolute;
@@ -34,13 +35,18 @@
       </li>
     </div>
 
+    <input type="checkbox" id = "Insensitive" name="case-insensitive"/>
+    <label for = "Insensitive">Case Insensitive</label>
+    <input type="checkbox" id = "Partial" name="partial-match"/>
+    <label for = "c2">Partial Match</label><br>
     <div class="input-group mb-6 col-6 ">
-        <input type="text" class="form-control" placeholder="Enter search terms" ria-label="searchbar1" aria-describedby="basic-addon2">
+        <input type="text" id = "searchBar" class="form-control" placeholder="Enter search terms" ria-label="searchbar1" aria-describedby="basic-addon2">
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button">Search</button>
+          <button class="btn btn-outline-secondary" type="button" onclick = "search()">Search</button>
         </div>
-      </div>
+    </div>
+    <table id = "results" class="table col-9">
     
-    
+    </table>
 </body>
 </html>
