@@ -1,5 +1,6 @@
-var create = document.getElementById('create');
-  create.style.display = 'none';
+var create;
+var numResults;
+var getAll = false;
 function postToDatabase() {
 	const Http = new XMLHttpRequest();
 	var e = document.getElementById('urlText');
@@ -8,15 +9,40 @@ function postToDatabase() {
 	var jString = '{"url":"' + url + '"}';
 	Http.open("POST", "api/indexing");	
 	Http.setRequestHeader("Content-Type", "application/json");
+	Http.onreadystatechange = function () {
+  		if(Http.readyState === 4 && Http.status === 200) {
+  		  console.log(Http.responseText);
+		  alert("Successfully added " + url + " to the database.");
+		}
+	};
+	//Http.onreadystatechange=(e)=>{
+	//alert("you have successfully added a url");
+	//console.log(Http.responseText)
+	//}
 	Http.send(jString);
-	Http.onreadystatechange=(e)=>{
-	alert("you have successfully added a url");
-	console.log(Http.responseText)
-	}
+
 }
 var text = 'hello';
 var query;
+var searchDate;
+var searchTime;
 function search () {
+	 create = document.getElementById('create');
+  create.style.display = 'none'
+  	var startDate = new Date();
+  	var startTime = startDate.getTime();
+  	var endDate, endTime;
+	var date = startDate.getDate();
+	var month = startDate.getMonth(); 
+	var year = startDate.getFullYear();
+	var formattedDate = [startDate.getFullYear(),
+				startDate.getMonth()+1,
+               startDate.getDate()].join('/')+' '+
+              [startDate.getHours(),
+               startDate.getMinutes(),
+               startDate.getSeconds()].join(':');
+  	searchDate  = new Date().toISOString().slice(0, 19).replace('T', ' ');;
+  	console.log(searchDate);
 	const Http = new XMLHttpRequest();
 	var searchBar = document.getElementById('searchBar');
 	var checkBox1 = document.getElementById('Insensitive');
@@ -34,11 +60,17 @@ function search () {
   		if(Http.readyState === 4 && Http.status === 200) {
   		  console.log(Http.responseText);
 		  text = Http.responseText;
-		  displayResults();
-		  var jsonString = findCheckedRows(JSON);
+		  endDate = new Date();
+		  endTime = endDate.getTime();
+		  searchTime = endTime - startTime;
+		  console.log("Search Time" + searchTime);
+		  displayResults()
+		  postSearch();
 		}
 	};
 	Http.send();
+	
+
 }
 function displayResults () {
 	var obj = JSON.parse(text);
@@ -61,7 +93,8 @@ function displayResults () {
                   </thead>
                   <tbody>
   			</tbody>`);
-	var numResults = 0;
+	numResults = 0;
+	if (obj.result != undefined) {
 	for (var i=0 ; i < obj.result.length ; i++) {
 		numResults++;	
 		$("tbody").append(`
@@ -102,6 +135,8 @@ function displayResults () {
   $( "table" ).after(`
     <input type="button" id = "save" value="Save Results" onclick="dropdown()">
     `);
+	}
+	
 }
 
 function dropdown () {
@@ -217,29 +252,77 @@ function parseRow(row) {
   return string;
 }
 function getAllSearches() {
+	getAll = true;
 	const Http = new XMLHttpRequest();
 	Http.open("GET", "api/search");	
 	//Http.setRequestHeader("Content-Type", "application/json");
 	Http.onreadystatechange = function () {
 		if(Http.readyState === 4 && Http.status === 200) {
-		  console.log(Http.responseText);
-		text = Http.responseText;
-		displayResults();
-	  }
-  };
-  Http.send();
+		  	console.log(Http.responseText);
+			text = Http.responseText;
+			console.log(Http.status);
+			displayHistory();
+	  	}
+  	};
+  	Http.send();
+}
+function displayHistory () {
+	var obj = JSON.parse(text);
+	$("table").append(`<thead class="thead-light">
+            	  <tr>
+                  <th scope="col">Terms</th>
+                  <th scope="col">Count</th>
+                  <th scope="col">Search Date</th>
+                  <th scope="col">Time To Search</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+  			</tbody>`);
+	numResults = 0;
+	if (obj != undefined) {
+	for (var i=0 ; i < obj.length ; i++) {
+		numResults++;	
+		$("tbody").append(`
+                      <tr>
+                      <td>`+ obj[i].terms + `</td>
+                      <td>`+ obj[i].count + `</td>
+                      <td>` + obj[i].searchDate + `</td>
+                      <td>`+ obj[i].timeToSearch + `</td>
+                      </tr>
+      `);
+	}
+	if (numResults == 0) {
+    $("tbody").append(`
+                    <tr>
+                    <td>No Searches Found</td>
+                    </tr>
+    `);
+  	}
+  	else {
+   		$("tbody").append(`
+                    <tr>
+                    <td>` + numResults + ` searches found</td>
+                    </tr>
+    	`);
+  	}
+  	
+	}
 }
 
 // left todo parse the json returned in search and pass it into this function
 function postSearch(string) {
+	var jsonString = '{"terms":"'+query+'","count":"'+numResults+'","searchDate":"'+searchDate+'","timeToSearch":"'+searchTime+'"}';
+	console.log("search srting" + jsonString);
 	const Http = new XMLHttpRequest();
-	var e = document.getElementById();
-	const url= e.value;
-	console.log(url);
 	Http.open("POST", "api/search");	
 	Http.setRequestHeader("Content-Type", "application/json");
-	Http.send(jString);
-	Http.onreadystatechange=(e)=>{
-	console.log(Http.responseText)
-	}
+	Http.onreadystatechange = function () {
+		console.log(Http.responseText);
+		 console.log(Http.status);
+		if(Http.readyState === 4 && Http.status === 200) {
+		  	console.log(Http.responseText);
+			console.log(Http.status);
+	  	}
+ 	};
+	Http.send(jsonString);
 }
