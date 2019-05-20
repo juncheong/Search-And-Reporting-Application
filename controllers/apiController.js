@@ -25,10 +25,10 @@ exports.getPageWord = (req, res, next) => {
     if (partialMatch == 'true' && caseInsensitive == 'true') {
         query += "AND UPPER(word.wordName) LIKE UPPER('%" + searchWord + "%') ";
     }
-    else if (caseInsensitive == 'true') {
+    else if (partialMatch == 'false' && caseInsensitive == 'true') {
         query += "AND UPPER(word.wordName) = UPPER('" + searchWord + "') ";
     }
-    else if (partialMatch == 'true') {
+    else if (partialMatch == 'true' && caseInsensitive == 'false') {
         query += "AND word.wordName LIKE '%" + searchWord + "%' ";
     }
     else {
