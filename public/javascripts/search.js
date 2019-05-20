@@ -10,6 +10,7 @@ function postToDatabase() {
 	Http.setRequestHeader("Content-Type", "application/json");
 	Http.send(jString);
 	Http.onreadystatechange=(e)=>{
+	alert("you have successfully added a url");
 	console.log(Http.responseText)
 	}
 }
@@ -216,9 +217,13 @@ function parseRow(row) {
 function getAllSearches() {
 	const Http = new XMLHttpRequest();
 	Http.open("GET", "api/search");	
-	Http.setRequestHeader("Content-Type", "application/json");
-	Http.send();
-	Http.onreadystatechange=(e)=>{
-	console.log(Http.responseText)
-	}
+	//Http.setRequestHeader("Content-Type", "application/json");
+	Http.onreadystatechange = function () {
+		if(Http.readyState === 4 && Http.status === 200) {
+		  console.log(Http.responseText);
+		text = Http.responseText;
+		displayResults();
+	  }
+  };
+  Http.send();
 }
