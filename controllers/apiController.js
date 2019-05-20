@@ -29,10 +29,10 @@ exports.getPageWord = (req, res, next) => {
         query += "AND UPPER(word.wordName) = UPPER('" + searchWord + "') ";
     }
     else if (partialMatch == "true" && caseInsensitive == "false") {
-        query += "AND word.wordName LIKE '%" + searchWord + "%' ";
+        query += "AND BINARY word.wordName LIKE '%" + searchWord + "%' ";
     }
     else {
-        query += "AND word.wordName = '" + searchWord + "' ";
+        query += "AND BINARY word.wordName = '" + searchWord + "' ";
     }
 
     query += "ORDER BY freq";
