@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/javascripts/googleAPI.js"></script>
     <script src="/javascripts/navigation.js"></script>
-    <link rel="stylesheet" href="/public/stylesheets/index.css">
+    <link rel="stylesheet" href="/stylesheets/index.css">
     <script>
       function loadXMLDoc() {
         var xmlhttp = new XMLHttpRequest();
@@ -32,11 +33,11 @@
                 <input value="XXXXXXXXXX:YYYYYYYYY" name="cx" type="hidden" />
                 <input value="FORID:11" name="cof" type="hidden"/>
                 <input id="q" name="q" size="75" type="text"/>
-                <button class="btn btn-outline-secondary">Search</button>
+                <button class="btn btn-outline-secondary" value="Submit">Search</button>
             </form>
         <div>
         <div class="gcse-results-wrapper">
-            <!-- <table class="table col-9"> 
+            <table class="table col-9"> 
           <thead class="thead-light">
             <tr>
               <th scope="col">Title</th>
@@ -46,9 +47,11 @@
           </thead>
 
         <tbody>
-          </table> -->
-                <gcse:searchresults-only>
-                </gcse:searchresults-only>
+        </tbody>
+
+          </table>
+                <!-- <gcse:searchresults-only>
+                </gcse:searchresults-only> -->
         </div>
 </body>
 </html>

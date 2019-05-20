@@ -29,5 +29,14 @@ function search () {
 	Http.onreadystatechange=(e)=>{
 	console.log(Http.responseText)
 	//var jsonString = Http.responseText;
+
+
+function getAllSearches() {
+	const Http = new XMLHttpRequest();
+	Http.open("GET", "api/search");	
+	Http.setRequestHeader("Content-Type", "application/json");
+	Http.send();
+	Http.onreadystatechange=(e)=>{
+	console.log(Http.responseText)
 	}
 }
