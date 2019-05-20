@@ -124,7 +124,7 @@ function displayResults () {
   	else {
    		$("tbody").append(`
                     <tr>
-                    <td>` + numResults + ` matches for "` + query.toLowerCase() + `"</td>
+                    <td>` + numResults + ` matches for "` + query.toLowerCase() + `" found in ` + searchTime + ` milliseconds.</td>
                     </tr>
     	`);
   	}
