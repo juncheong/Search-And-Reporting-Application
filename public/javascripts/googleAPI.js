@@ -14,6 +14,10 @@
 var query;
 
   function custom() {
+    create = document.getElementById('create');
+    create.style.display = 'none'
+    down = document.getElementById('downloadlink');
+    down.style.display = 'none'
     const Http = new XMLHttpRequest();
     var searchBar = document.getElementById('searchBar').value;
     query = searchBar;
@@ -32,6 +36,7 @@ var query;
 
 
   function showResults () {
+    $("table").empty();
 	var obj = JSON.parse(text);
 	$("table").append(`<thead class="thead-light">
                 <tr>

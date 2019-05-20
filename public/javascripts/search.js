@@ -27,8 +27,10 @@ var query;
 var searchDate;
 var searchTime;
 function search () {
-	 create = document.getElementById('create');
-  create.style.display = 'none'
+	create = document.getElementById('create');
+  	create.style.display = 'none'
+  	down = document.getElementById('downloadlink');
+  	down.style.display = 'none'
   	var startDate = new Date();
   	var startTime = startDate.getTime();
   	var endDate, endTime;
@@ -74,6 +76,7 @@ function search () {
 }
 function displayResults () {
 	var obj = JSON.parse(text);
+	$("table").empty();
 	$("table").append(`<thead class="thead-light">
             	  <tr>
                   <th scope="col"></th>

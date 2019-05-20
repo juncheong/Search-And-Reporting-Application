@@ -47,6 +47,10 @@ reader.readAsBinaryString(file.files[0]);
 }
 //console.log(obj.Result[0].title);
 function search () {
+  create = document.getElementById('create');
+    create.style.display = 'none'
+    down = document.getElementById('downloadlink');
+    down.style.display = 'none'
   if (fileType == ".json")
     jsonSearch();
   else if (fileType == ".xml") {
