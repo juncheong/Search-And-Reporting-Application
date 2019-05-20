@@ -31,9 +31,9 @@
   function showResults () {
 	var obj = JSON.parse(text);
 	$("table").append(`<thead class="thead-light">
-            	  <tr>
+                <tr>
+                <th scope="col">Title</th>
                   <th scope="col">URL</th>
-                  <th scope="col">Title</th>
                   <th scope="col">Description</th>
                   </tr>
                   </thead>
@@ -44,8 +44,8 @@
 		numResults++;	
 		$("tbody").append(`
                       <tr>
-                      <td><a href="`+ obj.items[i].link + `"">` + obj.items[i].link + `</a></td>
                       <td>`+ obj.items[i].title + `</td>
+                      <td><a href="`+ obj.items[i].link + `"">`+ obj.items[i].link + `</a></td>
                       <td>` + obj.items[i].snippet + `</td>
                       </tr>
       `);
