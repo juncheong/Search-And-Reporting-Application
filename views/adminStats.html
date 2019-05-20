@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="/public/stylesheets/index.css">
+    <link rel="stylesheet" href="/stylesheets/index.css">
     <script src="/javascripts/navigation.js"></script>
+    <script src="/javascripts/search.js"></script>
+
+    <style>
+    button {
+        margin: 5%;
+    }
+    </style>
 
     <title>Admin Stats</title>
 </head>
 <body>
     <h1>Admin Stats</h1>
 
-    <button class="btn btn-outline-secondary" type="button">Reveal Search History</button>
+    <button class="btn btn-outline-secondary" type="button" onclick = "getAllSearches()">Reveal Search History</button>
 
 </body>
 </html>

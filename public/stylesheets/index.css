@@ -1,10 +1,12 @@
 html *{
    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
 }
 
 h1, h2 {
     text-align: center;
     color: rgb(29, 167, 246);
+
   }
 
 
@@ -12,7 +14,6 @@ h1, h2 {
   li{
     margin: 5%;
     font-size: 20px;
-    color: rgb(29, 167, 246);
     list-style-type: none;
     font-family: verdana;
 
