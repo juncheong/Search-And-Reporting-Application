@@ -34,7 +34,7 @@ function search () {
 function getAllSearches() {
 	const Http = new XMLHttpRequest();
 	Http.open("GET", "api/search");	
-	Http.setRequestHeader("Content-Type", "application/json");
+	//Http.setRequestHeader("Content-Type", "application/json");
 	Http.send();
 	Http.onreadystatechange=(e)=>{
 	console.log(Http.responseText)

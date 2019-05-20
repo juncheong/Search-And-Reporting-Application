@@ -29,13 +29,18 @@
                 <gcse:search enableAutoComplete="true"></gcse:search>
                 
             </div>
-            <form id="searchbox_XXXXXXXXXX:YYYYYYYYY" action="" >
-                <input value="XXXXXXXXXX:YYYYYYYYY" name="cx" type="hidden" />
-                <input value="FORID:11" name="cof" type="hidden"/>
+            <!-- <form id="searchbox_XXXXXXXXXX:YYYYYYYYY" action="" >
+                <input id="r" value="XXXXXXXXXX:YYYYYYYYY" name="cx" type="hidden" />
+                <input id="k" value="FORID:11" name="cof" type="hidden"/>
                 <input id="q" name="q" size="75" type="text"/>
                 <button class="btn btn-outline-secondary" value="Submit">Search</button>
-            </form>
-        <div>
+            </form> -->
+            <div class="input-group mb-6 col-6 ">
+              <input type="text" id = "searchBar" class="form-control" placeholder="Enter search terms" ria-label="searchbar1" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary"  onclick = "custom()">Search</button>
+              </div>
+          </div>
         <div class="gcse-results-wrapper">
             <table class="table col-9"> 
           <thead class="thead-light">
