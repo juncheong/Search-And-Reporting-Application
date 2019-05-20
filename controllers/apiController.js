@@ -22,17 +22,17 @@ exports.getPageWord = (req, res, next) => {
     "WHERE page.pageId = page_word.pageId " +
     "AND word.wordId = page_word.wordId ";
 
-    if (partialMatch == 'true' && caseInsensitive == 'true') {
+    if (partialMatch == "true" && caseInsensitive == "true") {
         query += "AND UPPER(word.wordName) LIKE UPPER('%" + searchWord + "%') ";
     }
-    else if (caseInsensitive == 'true') {
+    else if (partialMatch == "false" && caseInsensitive == "true") {
         query += "AND UPPER(word.wordName) = UPPER('" + searchWord + "') ";
     }
-    else if (partialMatch == 'true') {
-        query += "AND word.wordName LIKE '%" + searchWord + "%' ";
+    else if (partialMatch == "true" && caseInsensitive == "false") {
+        query += "AND BINARY word.wordName LIKE '%" + searchWord + "%' ";
     }
     else {
-        query += "AND word.wordName = '" + searchWord + "' ";
+        query += "AND BINARY word.wordName = '" + searchWord + "' ";
     }
 
     query += "ORDER BY freq";
