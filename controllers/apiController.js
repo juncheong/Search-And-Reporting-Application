@@ -45,8 +45,7 @@ exports.getPageWord = (req, res, next) => {
             queryData: [{
                 searchWord: searchWord,
                 partialMatch: partialMatch,
-                caseInsensitive: caseInsensitive,
-                query: query
+                caseInsensitive: caseInsensitive
             }]
         });
     })
