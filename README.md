@@ -1,6 +1,11 @@
 # The web app is deployed at
 https://maccabeam.herokuapp.com/
 
+# Developers
+* Jun Cheong     -  Backend & DevOps
+* Rachel Hirmes  -  Frontend
+* Daniel Rand    -  Frontend
+
 # Getting started
 ## Using Docker
 ## Installation
